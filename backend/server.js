@@ -18,7 +18,9 @@ app.get('/restaurants', controller.getRestaurants, (req, res) =>
 );
 
 // POST route: 'create' entries to insert into reviews table
-app.post('/reviews', (req, res) => res.status(200).json());
+app.post('/reviews', controller.submitReview, (req, res) =>
+  res.status(200).json(res.locals.addedReview)
+);
 
 // unknown route handler
 app.use((req, res) => res.sendStatus(404));
