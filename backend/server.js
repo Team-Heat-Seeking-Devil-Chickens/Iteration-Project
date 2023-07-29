@@ -5,9 +5,20 @@ const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
+// import controller file
+const controller = require('./controller.js');
+
 // enable cors + parse json
 app.use(cors());
 app.use(express.json());
+
+// GET route: 'read' queries to restaurants table
+app.get('/restaurants', controller.getRestaurants, (req, res) =>
+  res.status(200).json(res.locals.restaurants)
+);
+
+// POST route: 'create' entries to insert into reviews table
+app.post('/reviews', (req, res) => res.status(200).json());
 
 // unknown route handler
 app.use((req, res) => res.sendStatus(404));
