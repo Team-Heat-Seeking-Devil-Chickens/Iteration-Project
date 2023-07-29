@@ -4,7 +4,9 @@ const App = () => {
   return (
     <div id='app'>
       <h1>Nathan Peel's Cool Site</h1>
-    </div>
+    
+    <h1>This is a header</h1>
+  </div>
   );
 };
 
