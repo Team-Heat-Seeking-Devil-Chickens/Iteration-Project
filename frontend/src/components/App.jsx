@@ -7,6 +7,8 @@ const App = () => {
 
       <h1>This is a header</h1>
       <h2>This is a secondary header</h2>
+
+      <h3>This is a tertiary header</h3>
     </div>
   );
 };
