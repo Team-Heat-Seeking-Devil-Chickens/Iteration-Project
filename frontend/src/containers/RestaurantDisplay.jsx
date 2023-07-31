@@ -1,12 +1,15 @@
 import React from 'react';
-import { UseSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateRest } from '../features/restaurantsSlice'
 import RestaurantCard from '../components/RestaurantCard.jsx';
 //import that slice of state here
 
 const RestaurantDisplay = () => {
   //get the updated array of Restaurants from state
-  const restaurant = useSelector((state) => state.restaurantsArray);
-// restaurant
+  const restaurant = useSelector((state) => state.restaurants.restList);
+  // here can we initialize restaurant to get request to all restaurants?
+
+  // restaurant
   //create an array to store all of the different RestaurantCards
   const displayArray = [];
 
