@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import "../styles/main.scss";
-import {useDispatch} from "react-redux"
-//import reviewContainer from "../containers/ReviewContainer";
+import React, { useState } from 'react';
+import '../styles/main.scss';
+import { useDispatch } from 'react-redux';
+import ReviewContainer from '../containers/ReviewContainer.jsx';
 
 {
   /* <h1>This is a header</h1>
@@ -10,11 +10,10 @@ import {useDispatch} from "react-redux"
 }
 
 const App = () => {
-
-
   return (
-    <div id="app">
+    <div id='app'>
       <h1>Nathan Peel's Cool Site</h1>
+      <ReviewContainer />
     </div>
   );
 };
