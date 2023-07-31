@@ -1,24 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
+// import { createSlice } from "@reduxjs/toolkit";
 
-//this is what where we submit a "POST" request
-const initialState = {
-  staff_attitude: "",
-  service: "",
-  review: "",
-  recommendation: "",
-  bathroom_vibe: "",
-  restaurant_id,
-  person_id,
-};
-//staff_attitude, service, review, recommendation, bathroom_vibe, restaurant_id, person_id
-export const reviewSlice = createSlice({
-  name: "review",
-  initialState,
-  reducers: {
-    changeProp: (state, action) => {},
-  },
-});
+// //this is what where we submit a "POST" request
 
-export const { changeProp } = reviewSlice.actions;
+// //staff_attitude, service, review, recommendation, bathroom_vibe, restaurant_id, person_id
+// export const reviewSlice = createSlice({
+//   name: "review",
+//   initialState,
+//   reducers: {
+//     changeProp: (state, action) => {},
+//   },
+// });
 
-export default reviewSlice.reducer;
+// export const { changeProp } = reviewSlice.actions;
+
+// export default reviewSlice.reducer;

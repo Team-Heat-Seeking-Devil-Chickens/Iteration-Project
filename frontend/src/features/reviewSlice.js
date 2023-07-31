@@ -10,17 +10,21 @@ const initialState = {
   bathroom: '',
 
 }
-
+//{bathroom: 'has cleaning products inside', staffAtt: 'Friendly'}
 
 export const reviewSlice = createSlice({
  name: 'review',
  initialState,
  reducers: {
-  updateReview: (state, action) => {
-   // action payload should be an array [review attribute,  attricute, value]
-    const attribute = action.payload[0];
-    const value = action.payload[1];
-    state[attribute] = value;
+   updateReview: (state, action) => {
+     console.log(action.payload);
+     // action payload should be an array [review attribute,  attricute, value]
+     const { field, value } = action.payload;
+    //  console.log(field)
+     // const attribute = action.payload[0];
+     // const value = action.payload[1];
+     state[field] = value;
+     console.log(state)
   }
  }
 })
