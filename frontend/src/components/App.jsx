@@ -1,8 +1,9 @@
-import React from 'react';
+import React from "react";
+import reviewContainer from "../containers/ReviewContainer";
 
 const App = () => {
   return (
-    <div id='app'>
+    <div id="app">
       <h1>Nathan Peel's Cool Site</h1>
 
       <h1>This is a header</h1>
