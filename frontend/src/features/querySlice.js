@@ -4,10 +4,10 @@ const initialState = {
   name: '',
   ambience: '',
   cuisine: '',
-  priceTier: '',
-  plantBase: '',
-  locationRad: '',
-  goodGroups: '',
+  price_tier: '',
+  plant_based: '',
+  location_radius: '',
+  good_for_groups: '',
 };
 
 export const querySlice = createSlice({

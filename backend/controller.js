@@ -7,18 +7,18 @@ const controller = {};
 // middleware: obtain restaurants matching selected criteria from 'restaurants' in DB
 controller.getRestaurants = async (req, res, next) => {
   try {
-    const {
-      name,
-      ambience,
-      cuisine,
-      priceTier,
-      vegOptions,
-      locationRadius,
-      goodForGroups,
-    } = req.body;
+    let query = `SELECT * FROM restaurants`;
 
-    const restaurantsQuery = `SELECT * from "restaurants"`;
-    const data = await db.query(restaurantsQuery);
+    let firstParam = true;
+    for (const key in req.body) {
+      const request = req.body;
+      if (request[key] !== '') {
+        query += `${firstParam ? ' WHERE' : ' AND'} ${key} = '${request[key]}'`;
+        firstParam = false;
+      }
+    }
+
+    const data = await db.query(query);
     console.log('data test', data.rows);
     res.locals.restaurants = data.rows;
     return next();

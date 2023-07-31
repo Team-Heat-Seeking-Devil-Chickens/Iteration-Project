@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateRest } from '../features/restaurantsSlice';
 import RestaurantCard from '../components/RestaurantCard.jsx';
@@ -22,7 +22,11 @@ const RestaurantDisplay = () => {
     }
   };
 
-  fetchRestaurants();
+
+  // fetchRestaurants();
+  useEffect(() => {
+    fetchRestaurants();
+  }, [])
 
   // grab that data --> array of objects
 

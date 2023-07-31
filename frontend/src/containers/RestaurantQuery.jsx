@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateQuery } from '../features/querySlice';
 import { updateRest } from '../features/restaurantsSlice';
@@ -14,6 +14,30 @@ const RestaurantQuery = () => {
 - call updateRest and set to new list of restaurants
 
 */
+  
+  
+  const fetchRestaurants = async () => {
+    try {
+      const backendUrl = 'http://localhost:3000/restaurants';
+      const jsonData = await fetch(backendUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'Application/JSON',
+        },
+        body: JSON.stringify(query),
+      });
+      const restaurantData = await jsonData.json();
+      dispatch(updateRest(restaurantData));
+    } catch (err) {
+      console.log(`There was an error fetching restaurant data: ${err}`);
+    }
+  };
+
+  useEffect(() => {
+    fetchRestaurants();
+  }, [query]);
+
+  
 
   return (
     <div>
@@ -66,7 +90,7 @@ const RestaurantQuery = () => {
           <select
             name='price-tier'
             id='priceSelector'
-            onChange={(e) => dispatch(updateQuery(['priceTier', e.target.value]))}
+            onChange={(e) => dispatch(updateQuery(['price_tier', e.target.value]))}
           >
               <option value=''>select</option>
               <option value='exquisite'>Exquisite</option>
@@ -86,7 +110,7 @@ const RestaurantQuery = () => {
           // format={(v) => v === '1'}
           // normalize={(v) => (v ? '1' : '0')}
           onChange={(e) =>
-            dispatch(updateQuery(['plantBase', e.target.value ? '1' : '0']))
+            dispatch(updateQuery(['plant_based', e.target.value === 0 ? '1' : '0']))
           }
         />
 
@@ -99,7 +123,7 @@ const RestaurantQuery = () => {
           // format={(v) => v === '1'}
           // normalize={(v) => (v ? '1' : '0')}
           onChange={(e) =>
-            dispatch(updateQuery(['goodGroups', e.target.value ? '1' : '0']))
+            dispatch(updateQuery(['good_for_groups', e.target.value == 0 ? '1' : '0']))
           }
         />
         <label htmlFor="locationRad">Location Radius</label>
@@ -107,7 +131,7 @@ const RestaurantQuery = () => {
           name='Location'
           id='locationRadius'
           onChange={(e) =>
-            dispatch(updateQuery(['locationRad', e.target.value]))
+            dispatch(updateQuery(['location_radius', e.target.value]))
           }
         >
           <option value='5km'>5 km</option>
