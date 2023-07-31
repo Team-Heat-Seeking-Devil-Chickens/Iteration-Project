@@ -19,3 +19,5 @@ export const querySlice = createSlice({
   }
  }
 })
+
+// export default querySlice;

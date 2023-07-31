@@ -1,29 +1,46 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import { changeProp } from '../reducers/reviewReducer';
+import {updateReview} from '../features/reviewSlice'
 
 const ReviewContainer = () => {
   const dispatch = useDispatch();
+  //const state = useSelector(state => console.log(state.bathroom))
 
-  //when the star is first 0, there is no star selected yet
-  //this determines if a star is clicked or not
-  const [starRating, setStarRating] = useState(1);
-  //console.log(starRating) // logs the star -> send dispatch()?
+  const [staffAtt, setStaffAtt] = useState(''); //stars  = service rating
+  const [service, setStarRating] = useState(1);//when the star is first 1, there is no star selected yet; this determines if a star is clicked or not
+  const [bathroom, setBathroom] = useState('');
+  const [review, setReview] = useState('');
+  const [recommend, setRecommend] = useState('');
 
   function handleStars(index) {
     //index = the star that was clicked
     //if the current star that was clicked is equal to the previous star (0, or previously clicked on star) - set the starRating to 0. otherwise, if you clicked in a different, star, we set the starRating to the star that was clicked
-    setStarRating(index === starRating ? 0 : index);
+    setStarRating(index === service? 0 : index);
     // console.log('the star i just clicked is', index);
     //console.log('this is the current starRating', starRating) //not updating bc state changes are async
-    dispatch({ type: 'SET_STAR_RATING', payload: index });
+    // dispatch({ type: 'SET_STAR_RATING', payload: index });
   }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const reviewForm = {
+      bathroom,
+      staffAtt,
+      review,
+      service,
+      recommend
+    } 
+
+    dispatch(updateReview(reviewForm))
+  }
+
   return (
     <div className='reviewContainer'>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className='staffAttitude'>
           <label>How was the staff attitude? </label>
-          <select>
+          <select value={staffAtt} onChange={(e) => setStaffAtt(e.target.value)}>
             <option>Select</option>
             <option value='Friendly'>Friendly</option>
             <option value='Curt'>Curt</option>
@@ -34,7 +51,7 @@ const ReviewContainer = () => {
         </div>
         <div className='bathroomVibeContainer'>
           <label>What are the bathroom vibes? </label>
-          <select>
+          <select onChange={(e)=>setBathroom(e.target.value)}>
             <option>Select</option>
             <option value='has cleaning products inside'>
               Has cleaning products inside the restroom
@@ -53,7 +70,7 @@ const ReviewContainer = () => {
             rows='5'
             cols='80'
             className='reviewContent'
-            // onChange={(e) => dispatch(changeProp(['review', e.target.value]))}
+            onChange={(e) => setReview(e.target.value)}
           ></textarea>
         </div>
         <div className='rating'>
@@ -62,7 +79,7 @@ const ReviewContainer = () => {
             <span
               key={starIndex}
               className={`serviceStars ${
-                starIndex <= starRating ? 'clicked' : ''
+                starIndex <= service ? 'clicked' : ''
               }`}
               onClick={() => handleStars(starIndex)}
             >
@@ -70,6 +87,15 @@ const ReviewContainer = () => {
             </span>
           ))}
         </div>
+        <div className='recommend'>
+          <span>Do you recommend? </span>
+          <select onChange={(e)=>setRecommend(e.target.value)}>
+            <option>Select</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+        <button type="submit">Submit Review</button>
       </form>
     </div>
   );
