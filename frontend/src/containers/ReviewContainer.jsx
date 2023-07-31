@@ -40,7 +40,7 @@ const ReviewContainer = () => {
       <form onSubmit={handleSubmit}>
         <div className='staffAttitude'>
           <label>How was the staff attitude? </label>
-          <select value={staffAtt} onChange={(e) => setStaffAtt(e.target.value)}>
+          <select>
             <option>Select</option>
             <option value='Friendly'>Friendly</option>
             <option value='Curt'>Curt</option>
