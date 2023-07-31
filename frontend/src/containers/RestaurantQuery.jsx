@@ -14,8 +14,8 @@ const RestaurantQuery = () => {
 - call updateRest and set to new list of restaurants
 
 */
-  
-  
+
+
   const fetchRestaurants = async () => {
     try {
       const backendUrl = 'http://localhost:3000/restaurants';
@@ -37,7 +37,7 @@ const RestaurantQuery = () => {
     fetchRestaurants();
   }, [query]);
 
-  
+
 
   return (
     <div>
@@ -92,40 +92,40 @@ const RestaurantQuery = () => {
             id='priceSelector'
             onChange={(e) => dispatch(updateQuery(['price_tier', e.target.value]))}
           >
-              <option value=''>select</option>
-              <option value='exquisite'>Exquisite</option>
-              <option value='splurge'>Splurge</option>
-              <option value='affordable'>Affordable</option>
-              <option value='thrifty'>Thrifty</option>
-              <option value='dirt cheap'>Dirt Cheap</option>
-            </select>
-          </label>
+            <option value=''>select</option>
+            <option value='exquisite'>Exquisite</option>
+            <option value='splurge'>Splurge</option>
+            <option value='affordable'>Affordable</option>
+            <option value='thrifty'>Thrifty</option>
+            <option value='dirt cheap'>Dirt Cheap</option>
+          </select>
+        </label>
 
-        <label htmlFor='plantBase'>Plant-Based?</label>
-        <input
-          label='vegetarian/vegan options?'
-          type='checkbox'
-          name='plantBase'
-          id='plantBase'
-          // format={(v) => v === '1'}
-          // normalize={(v) => (v ? '1' : '0')}
-          onChange={(e) =>
-            dispatch(updateQuery(['plant_based', e.target.value === 0 ? '1' : '0']))
-          }
-        />
+        <label htmlFor="plantBase">Vegetarian options?
+          <select
+            name="plantBase"
+            id="plantBase"
+            onChange={(e) => dispatch(updateQuery(['plant_based', e.target.value]))}
+          >
+            <option value="">select</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+        </label>
 
-        <label htmlFor='goodGroups'>Good for Groups?</label>
-        <input
-          label='good for groups?'
-          type='checkbox'
-          name='goodGroups'
-          id='goodGroups'
-          // format={(v) => v === '1'}
-          // normalize={(v) => (v ? '1' : '0')}
-          onChange={(e) =>
-            dispatch(updateQuery(['good_for_groups', e.target.value == 0 ? '1' : '0']))
-          }
-        />
+        <label htmlFor="good_for_groups">Good for Groups?
+          <select
+            name="good_for_groups"
+            id="good_for_groups"
+            onChange={(e) => dispatch(updateQuery(['good_for_groups', e.target.value]))}
+          >
+            <option value="">select</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+          </select>
+        </label>
+        
+
         <label htmlFor="locationRad">Location Radius</label>
         <select
           name='Location'
