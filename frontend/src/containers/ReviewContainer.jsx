@@ -24,6 +24,7 @@ const ReviewContainer = () => {
         <div className='staffAttitude'>
           <label>How was the staff attitude? </label>
           <select>
+            <option value="restaurant"></option>
             <option>Select</option>
             <option value='Friendly'>Friendly</option>
             <option value='Curt'>Curt</option>
