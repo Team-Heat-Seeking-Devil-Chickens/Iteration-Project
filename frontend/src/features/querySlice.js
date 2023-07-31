@@ -26,3 +26,6 @@ export const querySlice = createSlice({
   }
  }
 })
+
+export const { updateQuery } = querySlice.actions;
+export default querySlice.reducer;

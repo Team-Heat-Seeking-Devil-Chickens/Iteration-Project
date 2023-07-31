@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../styles/main.scss';
 import { useDispatch } from 'react-redux';
 import ReviewContainer from '../containers/ReviewContainer.jsx';
+import RestaurantDisplay from '../containers/RestaurantDisplay.jsx';
 
 {
   /* <h1>This is a header</h1>
@@ -13,6 +14,7 @@ const App = () => {
   return (
     <div id='app'>
       <h1>Nathan Peel's Cool Site</h1>
+      <RestaurantDisplay />
       <ReviewContainer />
     </div>
   );

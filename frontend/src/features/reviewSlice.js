@@ -24,3 +24,6 @@ export const reviewSlice = createSlice({
   }
  }
 })
+
+export const { updateReview } = reviewSlice.actions;
+export default reviewSlice.reducer;
