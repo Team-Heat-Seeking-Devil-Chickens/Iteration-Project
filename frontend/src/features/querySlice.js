@@ -17,7 +17,6 @@ export const querySlice = createSlice({
     updateQuery: (state, action) => {
       // action payload should be an array [query attricute, value]
       // invoke this function on onChange of the query selectors in Restaurant query --> i.e. onChange = (e) => dispatch(updateQuery(['ambience', e.target.value]))
-      // if attribute is vegoptions or good fro groups, the data can be manipulated.
       //  may have to ensure that value is a num/bit ?
       const attribute = action.payload[0];
       const value = action.payload[1];
@@ -25,3 +24,6 @@ export const querySlice = createSlice({
     },
   },
 });
+
+export const { updateQuery } = querySlice.actions;
+export default querySlice.reducer;
