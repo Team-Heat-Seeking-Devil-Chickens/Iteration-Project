@@ -13,7 +13,8 @@ controller.getRestaurants = async (req, res, next) => {
     for (const key in req.body) {
       const request = req.body;
       if (request[key] !== '') {
-        query += `${firstParam ? ' WHERE' : ' AND'} ${key} = '${request[key]}'`;
+        if (key === 'location_radius') query += `${firstParam ? ' WHERE' : ' AND'} ${key} < ${request[key]}`
+        else query += `${firstParam ? ' WHERE' : ' AND'} ${key} = '${request[key]}'`;
         firstParam = false;
       }
     }
