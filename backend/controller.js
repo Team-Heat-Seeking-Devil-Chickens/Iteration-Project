@@ -19,7 +19,7 @@ controller.getRestaurants = async (req, res, next) => {
 
     const restaurantsQuery = `SELECT * from "restaurants"`;
     const data = await db.query(restaurantsQuery);
-    // console.log('data test', data.rows);
+    console.log('data test', data.rows);
     res.locals.restaurants = data.rows;
     return next();
   } catch (err) {
