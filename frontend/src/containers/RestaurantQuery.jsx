@@ -126,7 +126,7 @@ const RestaurantQuery = () => {
         </label>
         
 
-        <label htmlFor="locationRad">Location Radius</label>
+        <label htmlFor="locationRad">Location Radius
         <select
           name='Location'
           id='locationRadius'
@@ -134,12 +134,14 @@ const RestaurantQuery = () => {
             dispatch(updateQuery(['location_radius', e.target.value]))
           }
         >
-          <option value='5km'>5 km</option>
-          <option value='10km'>10 km</option>
-          <option value='15km'>15 km</option>
-          <option value='20km'>20 km</option>
-          <option value='25km'>25 km</option>
+          <option value=''>select</option>
+          <option value='5'>5 km</option>
+          <option value='10'>10 km</option>
+          <option value='15'>15 km</option>
+          <option value='20'>20 km</option>
+          <option value='25'>25 km</option>
         </select>
+        </label>
       </form>
     </div>
   );
