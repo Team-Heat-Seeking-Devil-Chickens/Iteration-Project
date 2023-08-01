@@ -101,7 +101,7 @@ const RestaurantQuery = () => {
               dispatch(updateQuery(['price_tier', e.target.value]))
             }
           >
-            <option value=''>Select</option>
+            <option value=''>select</option>
             <option value='exquisite'>Exquisite</option>
             <option value='splurge'>Splurge</option>
             <option value='affordable'>Affordable</option>
@@ -109,50 +109,52 @@ const RestaurantQuery = () => {
             <option value='dirt cheap'>Dirt Cheap</option>
           </select>
         </label>
-        {/* <label htmlFor='plantBase'>Plant-Based? </label> */}
-        {/* <input
-          label='vegetarian/vegan options?'
-          type='checkbox'
-          name='plantBase'
-          id='plantBase'
-          // format={(v) => v === '1'}
-          // normalize={(v) => (v ? '1' : '0')}
-          onChange={(e) =>
-            dispatch(
-              updateQuery(['plant_based', e.target.value === 0 ? '1' : '0'])
-            )
-          }
-        />
 
-        <label htmlFor='goodGroups'>Good for Groups? </label>
-        <input
-          label='good for groups?'
-          type='checkbox'
-          name='goodGroups'
-          id='goodGroups'
-          // format={(v) => v === '1'}
-          // normalize={(v) => (v ? '1' : '0')}
-          onChange={(e) =>
-            dispatch(
-              updateQuery(['good_for_groups', e.target.value == 0 ? '1' : '0'])
-            )
-          } */}
-        {/* /> */}
-        <label className='dropDownLabel' htmlFor='locationRad'>
-          Location-Radius:
+        <label htmlFor='plantBase'>
+          Vegetarian options?
           <select
-            className='dropDown'
+            name='plantBase'
+            id='plantBase'
+            onChange={(e) =>
+              dispatch(updateQuery(['plant_based', e.target.value]))
+            }
+          >
+            <option value=''>select</option>
+            <option value='1'>Yes</option>
+            <option value='0'>No</option>
+          </select>
+        </label>
+
+        <label htmlFor='good_for_groups'>
+          Good for Groups?
+          <select
+            name='good_for_groups'
+            id='good_for_groups'
+            onChange={(e) =>
+              dispatch(updateQuery(['good_for_groups', e.target.value]))
+            }
+          >
+            <option value=''>select</option>
+            <option value='1'>Yes</option>
+            <option value='0'>No</option>
+          </select>
+        </label>
+
+        <label htmlFor='locationRad'>
+          Location Radius
+          <select
             name='Location'
             id='locationRadius'
             onChange={(e) =>
               dispatch(updateQuery(['location_radius', e.target.value]))
             }
           >
-            <option value='5km'>5 km</option>
-            <option value='10km'>10 km</option>
-            <option value='15km'>15 km</option>
-            <option value='20km'>20 km</option>
-            <option value='25km'>25 km</option>
+            <option value=''>select</option>
+            <option value='5'>5 km</option>
+            <option value='10'>10 km</option>
+            <option value='15'>15 km</option>
+            <option value='20'>20 km</option>
+            <option value='25'>25 km</option>
           </select>
         </label>
       </form>

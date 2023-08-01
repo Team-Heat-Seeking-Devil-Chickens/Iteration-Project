@@ -8,11 +8,11 @@ const RestaurantCard = ({ info }) => {
     <div className='resCard'>
       <h1>{name}</h1>
       <h2>Cuisine: {cuisine}</h2>
-      <p>Price Tier: {price_tier}</p>
-      <p>Ambience: {ambience}</p>
-      <p>Plant-Based? {plant_based === '0' ? 'no' : 'yes'}</p>
-      <p>Location Radius: {location_radius} km</p>
-      <p>Good for Groups? {good_for_groups === '0' ? 'no' : 'yes'}</p>
+      <p><strong>Price Tier:</strong> {price_tier}</p>
+      <p><strong>Ambience:</strong> {ambience}</p>
+      <p><strong>Plant-Based?</strong> {plant_based === '0' ? 'no' : 'yes'}</p>
+      <p><strong>Location Radius:</strong> {location_radius} km</p>
+      <p><strong>Good for Groups?</strong> {good_for_groups === '0' ? 'no' : 'yes'}</p>
       {/* <p>Nathan's Mom approves? yes</p> */}
     </div>
   );

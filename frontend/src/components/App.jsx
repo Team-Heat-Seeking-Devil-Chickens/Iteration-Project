@@ -14,7 +14,7 @@ import RestaurantQuery from '../containers/RestaurantQuery.jsx';
 const App = () => {
   return (
     <div id='app'>
-      <h1>Nathan Peel's Cool Site</h1>
+      <h1>(rec(commend), res(taurants), next)</h1>
       <RestaurantQuery />
       <RestaurantDisplay />
       <ReviewContainer />
