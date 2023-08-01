@@ -1,6 +1,6 @@
 /* from https://github.com/bradtraversy/webpack-starter/blob/main/src/styles/main.scss */
 
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@100;200;300;400&family=Outfit:wght@400;500;600;700;800;900&family=Patua+One&family=Philosopher:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 $primary-color: #2fa8cc;
 $secondary-color: #f4f4f4;
@@ -11,28 +11,97 @@ $box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
 }
 
 body {
-  background-color: $primary-color;
-  font-family: "Roboto", sans-serif;
+  background: rgb(255, 180, 214);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 180, 214, 1) 0%,
+    rgba(215, 149, 94, 1) 40%,
+    rgba(242, 124, 178, 1) 100%
+  );
+  font-family: 'Outfit', sans-serif;
+}
+
+#root {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center; // horizontal
+}
+
+#app {
+  width: 75%;
+}
+
+h1 {
+  font-size: 4em;
+  text-align: center;
+}
+
+/* RES DISPLAY + CARD STYLING */
+.resDisplay {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  width: 75%;
+  padding-top: 3em;
+}
+
+.resCard {
+  text-align: center;
+  flex-basis: 45%;
+  height: 25em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 5px;
+  margin-bottom: 2em;
+  background: rgb(113, 223, 243);
+  background: linear-gradient(
+    90deg,
+    rgba(113, 223, 243, 0.8491990546218487) 0%,
+    rgba(120, 187, 206, 1) 50%,
+    rgba(124, 184, 242, 1) 100%
+  );
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+
+
+  h1 {
+    text-transform: uppercase;
+    margin: 0;
+    text-shadow: -1px 1px 2px #eaeaea, 1px 1px 2px #eaeaea, 1px -1px 0 #eaeaea,
+    -1px -1px 0 #eaeaea;
+    font-size: 2em;
+  }
+
+  h2 {
+    text-transform: lowercase;
+    margin-top: 0;
+    font-family: 'Philosopher';
+    font-size: 1.75em;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
 }
 
 /* Review Container Styling*/
-.reviewContainer{
+.reviewContainer {
   border: 1px dashed;
   padding: 10px;
   font-weight: bold;
 }
 
 .serviceStars {
-  cursor: "pointer";
+  cursor: 'pointer';
   transition: color 0.2s;
 }
 
 // .serviceStars:hover ,
 .serviceStars.clicked {
-  color: rgb(255, 200, 0); 
+  color: rgb(255, 200, 0);
   /*Error: for some reason hover turns stars yellow from the end idk*/
 }
