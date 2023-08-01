@@ -110,9 +110,10 @@ const RestaurantQuery = () => {
           </select>
         </label>
 
-        <label htmlFor='plantBase'>
+        <label htmlFor='plantBase' className='dropDownLabel'>
           Vegetarian options?
           <select
+            className='dropDown'
             name='plantBase'
             id='plantBase'
             onChange={(e) =>
@@ -125,9 +126,10 @@ const RestaurantQuery = () => {
           </select>
         </label>
 
-        <label htmlFor='good_for_groups'>
+        <label htmlFor='good_for_groups' className='dropDownLabel'>
           Good for Groups?
           <select
+            className='dropDown'
             name='good_for_groups'
             id='good_for_groups'
             onChange={(e) =>
@@ -140,9 +142,10 @@ const RestaurantQuery = () => {
           </select>
         </label>
 
-        <label htmlFor='locationRad'>
+        <label htmlFor='locationRad' className='dropDownLabel'>
           Location Radius
           <select
+            className='dropDown'
             name='Location'
             id='locationRadius'
             onChange={(e) =>

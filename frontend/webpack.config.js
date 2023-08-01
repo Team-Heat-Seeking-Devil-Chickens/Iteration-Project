@@ -59,13 +59,6 @@ module.exports = {
           },
         },
       },
-      {
-        loader: 'url-loader',
-        options: {
-          limit: 8192, // You can adjust this limit based on your requirements
-          name: 'images/[name].[ext]',
-        },
-      },
       // set up resource loader (native)
       {
         // (RegEx expression)
