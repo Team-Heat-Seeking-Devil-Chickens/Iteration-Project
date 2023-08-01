@@ -31,6 +31,12 @@ module.exports = {
       directory: path.resolve(__dirname, 'dist'),
     },
     port: 8080,
+    proxy: [ //redirects requests to host 3000
+      {
+        context: ['/user', '/restaurants'], //more might be needed to be added later
+        target: 'http://localhost:3000'
+      },
+    ],
     open: true,
     hot: true,
     compress: true,
