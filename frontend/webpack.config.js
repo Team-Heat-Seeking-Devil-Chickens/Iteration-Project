@@ -59,12 +59,19 @@ module.exports = {
           },
         },
       },
+      {
+        loader: 'url-loader',
+        options: {
+          limit: 8192, // You can adjust this limit based on your requirements
+          name: 'images/[name].[ext]',
+        },
+      },
       // set up resource loader (native)
       {
         // (RegEx expression)
         // rule will apply to any file that ends in .png/svg/jpg/jpeg/gif
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: 'asset/resource',
+        type: 'assets/resource',
       },
     ],
   },

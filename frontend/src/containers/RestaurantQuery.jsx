@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateQuery } from '../features/querySlice';
 import { updateRest } from '../features/restaurantsSlice';
+//import wobbe from '../frontend/assets/logo.png';
 
 const RestaurantQuery = () => {
   // create an action for one drop-down
@@ -14,7 +15,6 @@ const RestaurantQuery = () => {
 - call updateRest and set to new list of restaurants
 
 */
-
 
   const fetchRestaurants = async () => {
     try {
@@ -37,28 +37,33 @@ const RestaurantQuery = () => {
     fetchRestaurants();
   }, [query]);
 
-
-
   return (
     <div>
-      <form>
-        <label htmlFor='restaurant'>Restaurant</label>
-        <input
-          placeholder='restaurant name...'
-          name='restaurant'
-          type='text'
-          id='restaurantName'
-          onChange={(e) => dispatch(updateQuery(['name', e.target.value]))}
-        />
-
-        <label htmlFor='cuisine'>
-          Cuisine
+      <script
+        async
+        src='//embedr.flickr.com/assets/client-code.js'
+        charset='utf-8'
+      ></script>
+      <form className='queryFormContainer'>
+        <label id='nameLabel' htmlFor='restaurant'>
+          Restaurant:
+          <input
+            placeholder='Restaurant Name...'
+            name='restaurant'
+            type='text'
+            id='restaurantName'
+            onChange={(e) => dispatch(updateQuery(['name', e.target.value]))}
+          />
+        </label>
+        <label className='dropDownLabel' htmlFor='cuisine'>
+          Cuisine:
           <select
+            className='dropDown'
             name='cuisine'
             id='cuisineSelector'
             onChange={(e) => dispatch(updateQuery(['cuisine', e.target.value]))}
           >
-            <option value=''>select</option>
+            <option value=''>Select</option>
             <option value='Mexican'>Mexican</option>
             <option value='Indian'>Indian</option>
             <option value='American'>American</option>
@@ -68,16 +73,17 @@ const RestaurantQuery = () => {
             <option value='Japanese'>Japanese</option>
           </select>
         </label>
-
-        <label htmlFor='ambience'>Ambience
+        <label className='dropDownLabel' htmlFor='ambience'>
+          Ambience:
           <select
+            className='dropDown'
             name='ambience'
             id='ambienceSelector'
             onChange={(e) =>
               dispatch(updateQuery(['ambience', e.target.value]))
             }
           >
-            <option value=''>select</option>
+            <option value=''>Select</option>
             <option value='date night'>Date Night</option>
             <option value='trendy'>Trendy</option>
             <option value='litty'>Litty</option>
@@ -85,12 +91,15 @@ const RestaurantQuery = () => {
             <option value='country'>Country</option>
           </select>
         </label>
-
-        <label htmlFor="price-tier">Price Tier
+        <label className='dropDownLabel' htmlFor='price-tier'>
+          Price-Tier:
           <select
+            className='dropDown'
             name='price-tier'
             id='priceSelector'
-            onChange={(e) => dispatch(updateQuery(['price_tier', e.target.value]))}
+            onChange={(e) =>
+              dispatch(updateQuery(['price_tier', e.target.value]))
+            }
           >
             <option value=''>select</option>
             <option value='exquisite'>Exquisite</option>
@@ -101,46 +110,52 @@ const RestaurantQuery = () => {
           </select>
         </label>
 
-        <label htmlFor="plantBase">Vegetarian options?
+        <label htmlFor='plantBase'>
+          Vegetarian options?
           <select
-            name="plantBase"
-            id="plantBase"
-            onChange={(e) => dispatch(updateQuery(['plant_based', e.target.value]))}
+            name='plantBase'
+            id='plantBase'
+            onChange={(e) =>
+              dispatch(updateQuery(['plant_based', e.target.value]))
+            }
           >
-            <option value="">select</option>
-            <option value="1">Yes</option>
-            <option value="0">No</option>
+            <option value=''>select</option>
+            <option value='1'>Yes</option>
+            <option value='0'>No</option>
           </select>
         </label>
 
-        <label htmlFor="good_for_groups">Good for Groups?
+        <label htmlFor='good_for_groups'>
+          Good for Groups?
           <select
-            name="good_for_groups"
-            id="good_for_groups"
-            onChange={(e) => dispatch(updateQuery(['good_for_groups', e.target.value]))}
+            name='good_for_groups'
+            id='good_for_groups'
+            onChange={(e) =>
+              dispatch(updateQuery(['good_for_groups', e.target.value]))
+            }
           >
-            <option value="">select</option>
-            <option value="1">Yes</option>
-            <option value="0">No</option>
+            <option value=''>select</option>
+            <option value='1'>Yes</option>
+            <option value='0'>No</option>
           </select>
         </label>
-        
 
-        <label htmlFor="locationRad">Location Radius
-        <select
-          name='Location'
-          id='locationRadius'
-          onChange={(e) =>
-            dispatch(updateQuery(['location_radius', e.target.value]))
-          }
-        >
-          <option value=''>select</option>
-          <option value='5'>5 km</option>
-          <option value='10'>10 km</option>
-          <option value='15'>15 km</option>
-          <option value='20'>20 km</option>
-          <option value='25'>25 km</option>
-        </select>
+        <label htmlFor='locationRad'>
+          Location Radius
+          <select
+            name='Location'
+            id='locationRadius'
+            onChange={(e) =>
+              dispatch(updateQuery(['location_radius', e.target.value]))
+            }
+          >
+            <option value=''>select</option>
+            <option value='5'>5 km</option>
+            <option value='10'>10 km</option>
+            <option value='15'>15 km</option>
+            <option value='20'>20 km</option>
+            <option value='25'>25 km</option>
+          </select>
         </label>
       </form>
     </div>
