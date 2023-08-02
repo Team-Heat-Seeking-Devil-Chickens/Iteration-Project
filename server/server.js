@@ -1,8 +1,7 @@
 const express = require('express');
 const fetch = require('node-fetch');
 const cors = require('cors'); //might be optional?
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+
 const app = express();
 
 const PORT = 3000;
@@ -13,6 +12,7 @@ const controller = require('./controller.js');
 // enable cors + parse json
 app.use(cors());
 app.use(express.json());
+
 
 // GET route: 'read' queries to restaurants table
 app.get('/restaurants', controller.getRestaurants, (req, res) =>
@@ -28,9 +28,20 @@ app.post('/reviews', controller.submitReview, (req, res) =>
   res.status(200).json(res.locals.addedReview)
 );
 
+
+//-----> USER ROUTES START
+
+let users = []; //DELETE ME! i am a temporary database replacement
+
 // POST route: 'create' new user accounts to insert into users table
+app.post('/register', (req, res) => //add middleware
+  res.status().json({accessToken: accessToken})
+);
 
 // POST route: login user
+
+
+//-----> USER ROUTES END
 
 // unknown route handler
 app.use((req, res) => res.sendStatus(404));
