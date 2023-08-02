@@ -1,28 +1,20 @@
 // require model & pg-format
-const db = require('./models.js');
+const db = require('../models.js');
 const format = require('pg-format');
 
-const controller = {};
-
+const restaurantController = {};
+const token = 'jRAUTCjFbYX0mAx44ncfKVTj4ca8bJYWfHt3qfVk10M928uff6eCHu731g9-lIqswaeVEkjtjQnmgrc34xCSVzLhQbB9aCPGV31cfBfHsxrQyZV82vqjRitvLk7JZHYx'
 // middleware: obtain restaurants matching selected criteria from 'restaurants' in DB
-controller.getRestaurants = async (req, res, next) => {
+restaurantController.getRestaurants = async (req, res, next) => {
   try {
-    let query = `SELECT * FROM restaurants`;
-
-    let firstParam = true;
-    for (const key in req.body) {
-      const request = req.body;
-      if (request[key] !== '') {
-        if (key === 'location_radius') query += `${firstParam ? ' WHERE' : ' AND'} ${key} < ${request[key]}`
-        else query += `${firstParam ? ' WHERE' : ' AND'} ${key} = '${request[key]}'`;
-        firstParam = false;
-      }
-    }
-
-    const data = await db.query(query);
-    console.log('data test', data.rows);
-    res.locals.restaurants = data.rows;
-    return next();
+    const { zipcode, categories, price } = req.body
+    let query = `https://api.yelp.com/v3/businesses/search?${zipcode ? `&location=${zipcode}` : ''}&term=food&${categories ? `&categories=${categories}` : ''}${price ? `&price=${price}` : ''}&sort_by=distance&limit=40`
+    const restaurantsList = await fetch(query, {method: "GET", headers: {
+      Authorization: `Bearer ${token}`
+    }} )
+    res.locals.restaurants = await restaurantsList.json()
+    console.log(res.locals.restaurants)
+    next()
   } catch (err) {
     return next({
       log: `Express caught error in controller.getRestaurants: ${err}`,
@@ -34,7 +26,7 @@ controller.getRestaurants = async (req, res, next) => {
 };
 
 // middleware: submit review information to 'reviews' in DB
-controller.submitReview = async (req, res, next) => {
+restaurantController.submitReview = async (req, res, next) => {
   try {
     const { staffAttitude, service, review, recommendation, bathroomVibe } =
       req.body;
@@ -56,4 +48,4 @@ controller.submitReview = async (req, res, next) => {
   }
 };
 
-module.exports = controller;
+module.exports = restaurantController;

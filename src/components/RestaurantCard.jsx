@@ -2,7 +2,7 @@ import React from 'react';
 
 //deconstruct passed down info prop
 const RestaurantCard = ({ info }) => {
-  const {name, ambience, cuisine, price_tier, plant_based, location_radius, good_for_groups} = info;
+  const {name, image, price, location, cuisine} = info;
 
   return (
     <div className='resCard'>
