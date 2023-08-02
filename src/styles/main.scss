@@ -225,3 +225,77 @@ h1 {
 .serviceStars.clicked {
   color: rgb(255, 200, 0);
 }
+/* Custom styles for the Signup component */
+.login {
+  // Center the Signup component on the screen
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.logTitle {
+  // Customize the title style
+  font-family: 'Belanosima';
+  text-shadow: 0.1rem 0.1rem 0.1rem rgba(138, 100, 141, 0.6);
+  font-size: 3em;
+  color: white;
+}
+
+.username,
+.password,
+.zipCode {
+  // Customize the input field styles
+  font-family: 'Merienda';
+  background-color: blanchedalmond;
+  min-height: 2rem;
+  max-height: 2.5rem;
+  box-shadow: 0.15rem 0.15rem 0.4rem 0.04rem rgba(87, 53, 0, 0.6);
+  border-radius: 0.25rem;
+  border-width: 0.1;
+  border-color: gray;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+
+.createAcct {
+  // Customize the 'Create Account' button style
+  background-color: $primary-color;
+  color: white;
+  font-size: 1.2rem;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.createAcct:hover {
+  // Add a hover effect to the 'Create Account' button
+  background-color: darken($primary-color, 10%);
+}
+
+/* Center the buttons and add spacing between them */
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Customize the 'Login' and 'Logout' buttons */
+.loginBtn,
+.logoutBtn {
+  background-color: $secondary-color;
+  color: $primary-color;
+  font-size: 1.2rem;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.loginBtn:hover,
+.logoutBtn:hover {
+  background-color: darken($secondary-color, 10%);
+}

@@ -42,7 +42,7 @@ app.post('/signup',
   sessionController.startSession,
   cookieController.setCookies,
   (req, res) => res.status(200).json(res.locals.user));
-
+//  maybe just send res.locals.user
 // check if session exists if accessing /main
 app.get('/main',
   sessionController.isLoggedIn,
