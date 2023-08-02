@@ -1,61 +1,84 @@
 import React from 'react';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import Rating from '@mui/material/Rating';
-import Typography from '@mui/material/Typography';
-import CardActions from '@mui/material/CardActions';
+import {
+  CardActions,
+  Typography,
+  Rating,
+  CardContent,
+  CardMedia,
+  CardHeader,
+  Card,
+} from '@mui/material';
 import ReviewsModal from './ReviewsModal.jsx';
 
-//deconstruct passed down info prop
-const RestaurantCard = ({ info }) => {
-  
-  const {
-    name,
-    catagories,
-    rating,
-    location,
-    radius,
-    price,
-    reviews,
-    imageUrl,
-  } = info;
+//deconstruct passed down info prop { info }
+const RestaurantCard = () => {
+  // const {
+  //   restaurant_id,
+  //   user_id,
+  //   username,
+  //   name,
+  //   catagories,
+  //   rating,
+  //   location,
+  //   radius,
+  //   price,
+  //   reviews,
+  //   imageUrl,
+  // } = info;
 
+  const info = {
+    name: 'Restaurant Name',
+    catagories: ['Mexican', 'Thai', 'Japanese'],
+    rating: 4,
+    location: 90210,
+    radius: 5,
+    price: '$$',
+    reviews: [
+      { username: 'Brian', review: 'test', rating: 3 },
+      { username: 'Darius', review: 'test1', rating: 5 },
+      { username: 'Duke', review: 'test3', rating: 4 },
+      { username: 'Clay', review: 'test4', rating: 4 },
+      { username: 'Hernan', review: 'test5', rating: 5 },
+    ],
+    image_Url:
+      'https://cdn.discordapp.com/attachments/1136006174513307740/1136349347852861460/image.png',
+    username: 'Brian',
+    restaraunt_id: 'abcdefg',
+  };
 
   return (
     <Card>
-      <CardHeader title={name} subheader={`price tier: ${price}`} />
+      <CardHeader title={info.name} subheader={`price tier: ${info.price}`} />
       <CardMedia
         component="img"
         height="194"
-        image={imageUrl}
-        alt="where can we get alt image text from api?"
+        image={info.image_Url}
+        alt={info.name}
       />
       <CardContent>
         <Typography component="legend">
           <strong>Rating:</strong>
           <Rating
             name="read-only"
-            value={rating}
+            value={info.rating}
             /*add rating value from */ readOnly
           />
         </Typography>
         <Typography>
-          <strong>Price Tier:</strong> {price}
+          <strong>Price Tier:</strong> {info.price}
         </Typography>
         <Typography>
-          <strong>Location:</strong> {location}
+          <strong>Location:</strong> {info.location}
         </Typography>
         <Typography>
-          <strong>Location Radius:</strong> {radius} km
+          <strong>Location Radius:</strong> {info.radius} km
         </Typography>
         <Typography>
-          <strong>Cuisine:</strong> {catagoies}
+          <strong>Cuisine:</strong> {info.catagories.join(', ')}
         </Typography>
       </CardContent>
       <CardActions>
-        <ReviewsModal reviews={reviews} />
+        <ReviewsModal info={info} />
       </CardActions>
     </Card>
   );
