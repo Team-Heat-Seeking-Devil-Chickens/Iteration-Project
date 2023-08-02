@@ -1,8 +1,10 @@
 const express = require('express');
 const fetch = require('node-fetch');
-const cors = require('cors');
-
+const cors = require('cors'); //might be optional?
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const app = express();
+
 const PORT = 3000;
 
 // import controller file
