@@ -37,42 +37,42 @@ userController.verifyUser = (req, res, next) => {
 }
 
 userController.createUser = (req, res, next) => {
-  const { username, password, zipcode} = req.body;
+  const { username, password, zipcode } = req.body;
 
   if (!username || !password || !zipcode)
-  return next({
+    return next({
       log: 'Missing username/password/zipcode in UserController.createUser',
-      message : {err: 'An error occured'}
-  })
-  User.create({ 
+      message: { err: 'An error occured' }
+    })
+  User.create({
     username,
     password,
     zipcode
-  }) 
-  .then((user) => {
-      res.locals._id = user._id;
-      res.locals.zipcode = user.zipcode;
-      return next();
   })
-  .catch((err) => {
+    .then((user) => {
+      res.locals._id = user._id;
+      console.log(res.locals._id);
+      return next();
+    })
+    .catch((err) => {
       return next({
-          log: 'Error occurred in userController.createUser',
-          message: {err:  `Error trying to create user: ${err}`},
+        log: 'Error occurred in userController.createUser',
+        message: { err: `Error trying to create user: ${err}` },
       });
-  });
+    });
 };
 
 userController.getUserReview = (req, res, next) => {
   const { restaurantID, reviews } = req.body;
-    Review.findOne({restaurantID}).then((review) => {
-        res.locals.reviews = review.reviews;
-        return next()
-    }).catch((error) => {
-        return next({ 
-            log: 'Error occurred in userController.gerUserReview',
-            message: {err:  `Error trying to find review: ${err}`},
-        })
-      })  
-    }
+  Review.findOne({ restaurantID }).then((review) => {
+    res.locals.reviews = review.reviews;
+    return next()
+  }).catch((error) => {
+    return next({
+      log: 'Error occurred in userController.gerUserReview',
+      message: { err: `Error trying to find review: ${err}` },
+    })
+  })
+}
 
 module.exports = userController;
