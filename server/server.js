@@ -8,6 +8,7 @@ const PORT = 3000;
 
 // import controller file
 const controller = require('./controller.js');
+const userController = require('./userController.js');
 
 // enable cors + parse json
 app.use(cors());
@@ -34,11 +35,16 @@ app.post('/reviews', controller.submitReview, (req, res) =>
 let users = []; //DELETE ME! i am a temporary database replacement
 
 // POST route: 'create' new user accounts to insert into users table
-app.post('/register', (req, res) => //add middleware
-  res.status().json({accessToken: accessToken})
+app.post('/register', userController.authenticateRegister (req, res) =>
+  res.status().json(res.locals.accessToken)
 );
 
 // POST route: login user
+app.post('/login', userController.authenticateLogin (req, res) =>
+  res.status().json(res.locals.accessToken)
+);
+
+
 
 
 //-----> USER ROUTES END

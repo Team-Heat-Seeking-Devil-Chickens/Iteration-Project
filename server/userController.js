@@ -5,6 +5,40 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const userController = {
+  authenticateRegister: (req, res, next) => {
+    bcrypt.hash(req.body.password, 10).then(hashedPassword => {
+        const user = { name: req.body.name, password: hashedPassword };
+        // res.locals.user = user TO USE LATER WITH REAL AJAX CALL
+        users.push(user); //TODO: DELETE ME LATER
+        res.locals.accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET); //creates new JWT as a string
+        return next();
+      })
+      .catch((err) => {
+        return next({
+          log: `userController.authenticateRegister failed to create JWT token, ${err.message}.`,
+          status: 500,
+          message: { err: 'Failed to create new JWT token.' },
+        });
+      })
+  },
+
+  authenticateLogin: (req, res, next) => {
+    //find user in db
+    const user = users.find(user => user.name === req.body.name);
+    bcrypt.compare(req.body.password, user.password)
+      .then(match => {
+        if (match) {
+          res.locals.accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+        }
+      })
+      .catch(() => {
+        return next({
+          log: `userController.authenticateLogin failed to compare login details, ${err.message}.`,
+          status: 500,
+          message: { err: 'Failed to login.' },
+        });
+      })
+  }
   
 };
 
