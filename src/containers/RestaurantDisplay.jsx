@@ -22,7 +22,84 @@ const RestaurantDisplay = () => {
     }
   };
 
+  const getRestaurants = (address, radius, minRating, maxPriceLevel, minNumOfRatings) => {
+    // Encode the address to include it as a URL parameter
+    const encodedAddress = encodeURIComponent(address);
+    axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=AIzaSyAQxC9h6Cux5KqQ62OHTAAuAVptA194-bY`)
+    .then(response => {
+      // The latitude and longitude are located in 
+      // response.data.results[0].geometry.location
+      const location = response.data.results[0].geometry.location;
+      console.log(`Latitude: ${location.lat}`);
+      console.log(`Longitude: ${location.lng}`);
 
+      // Now return the location so it can be used in the next then block
+      return location;
+    })
+    .then(location => {
+      return axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
+        params: {
+          location: `${location.lat},${location.lng}`,  // use the lat/lng from the Geocoding API
+          radius: radius,
+          type: 'restaurant',
+          key: 'AIzaSyAQxC9h6Cux5KqQ62OHTAAuAVptA194-bY'
+        }
+      });
+    })
+    .then(response => {
+      const places = response.data.results;
+      const filteredPlaces = places.filter(place => place.rating >= 4.5 && price_level <= maxPriceLevel && user_ratings_total <= minNumOfRatings); // place min 
+      return Promise.all(filteredPlaces.map(restaurant => {
+        return axios.get('https://maps.googleapis.com/maps/api/place/details/json', {
+          params: {
+            place_id: restaurant.place_id,
+            fields: 'reviews,rating,name,types',
+            key: 'AIzaSyAQxC9h6Cux5KqQ62OHTAAuAVptA194-bY'
+          }
+        }).then(detailsResponse => {
+          restaurant.details = detailsResponse.data.result;
+          return restaurant;
+        });
+      }));
+    })
+    .then(restaurantsWithDetails => {
+      console.log(restaurantsWithDetails);
+    })
+    .catch(error => {
+      console.error(`Could not retrieve data: ${error}`);
+    });
+  }
+  //example object: 
+  /*
+   {
+    business_status: 'OPERATIONAL',
+    geometry: { location: [Object], viewport: [Object] },
+    icon: 'https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png',
+    icon_background_color: '#FF9E67',
+    icon_mask_base_uri: 'https://maps.gstatic.com/mapfiles/place_api/icons/v2/restaurant_pinlet',
+    name: "Ann Marie's Corned Beef",
+    opening_hours: { open_now: false },
+    photos: [ [Object] ],
+    place_id: 'ChIJM4wnjP8hJYgRvYu8r3sQSnw',
+    plus_code: {
+      compound_code: 'J3HW+36 Clinton Township, MI, USA',
+      global_code: '86JVJ3HW+36'
+    },
+    price_level: 1,
+    rating: 4.5,
+    reference: 'ChIJM4wnjP8hJYgRvYu8r3sQSnw',
+    scope: 'GOOGLE',
+    types: [ 'restaurant', 'food', 'point_of_interest', 'establishment' ],
+    user_ratings_total: 40,
+    vicinity: '21312 Hall Road, Clinton Township',
+    details: {
+      name: "Ann Marie's Corned Beef",
+      rating: 4.5,
+      reviews: [Array],
+      types: [Array]
+    }
+  },
+  */
   // fetchRestaurants();
   useEffect(() => {
     fetchRestaurants();

@@ -1,7 +1,7 @@
 const { Pool } = require('pg');
+require('dotenv').config();
 
-const PG_URI =
-  'postgres://airqktxs:aQZgLI9E8FX15CbGGx7DMaUd-Hs9qwTI@mahmud.db.elephantsql.com/airqktxs';
+const PG_URI = `postgresql://postgres:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/panda-whale-group`;
 
 // create new pool using connection string
 const pool = new Pool({

@@ -1,0 +1,14 @@
+{
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "34.102.118.217",
+      "port": 5432,
+      "askForPassword": true,
+      "driver": "PostgreSQL",
+      "name": "iteration group",
+      "database": "panda-whale-group",
+      "username": "postgres"
+    }
+  ]
+}
