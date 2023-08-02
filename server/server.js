@@ -1,5 +1,7 @@
 const express = require('express');
-const fetch = require('node-fetch');
+//const fetch = require('node-fetch');
+
+
 const cors = require('cors');
 
 const app = express();
@@ -11,6 +13,10 @@ const controller = require('./controller.js');
 // enable cors + parse json
 app.use(cors());
 app.use(express.json());
+
+// app.get('/', (req, res) =>
+//   res.status(200).json()
+// );
 
 // GET route: 'read' queries to restaurants table
 app.get('/restaurants', controller.getRestaurants, (req, res) =>
@@ -44,3 +50,7 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server is running on localhost:${PORT}...`);
 });
+
+module.exports = app.listen(PORT, () =>
+  console.log(`Listening on port ${PORT}`)
+);
