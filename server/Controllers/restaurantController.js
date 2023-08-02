@@ -8,6 +8,7 @@ const token = 'jRAUTCjFbYX0mAx44ncfKVTj4ca8bJYWfHt3qfVk10M928uff6eCHu731g9-lIqsw
 restaurantController.getRestaurants = async (req, res, next) => {
   try {
     const { zipcode, categories, price } = req.body
+    // array functionality - array to csv
     let query = `https://api.yelp.com/v3/businesses/search?${zipcode ? `&location=${zipcode}` : ''}&term=food&${categories ? `&categories=${categories}` : ''}${price ? `&price=${price}` : ''}&sort_by=distance&limit=40`
     const restaurantsList = await fetch(query, {method: "GET", headers: {
       Authorization: `Bearer ${token}`
@@ -25,27 +26,28 @@ restaurantController.getRestaurants = async (req, res, next) => {
   }
 };
 
+// restaurant id, 1 - 5 rating, review text
 // middleware: submit review information to 'reviews' in DB
-restaurantController.submitReview = async (req, res, next) => {
-  try {
-    const { staffAttitude, service, review, recommendation, bathroomVibe } =
-      req.body;
+// restaurantController.submitReview = async (req, res, next) => {
+//   try {
+//     const { staffAttitude, service, review, recommendation, bathroomVibe } =
+//       req.body;
 
-    const reviewSubmission = `INSERT INTO review (staff_attitude, service, review, recommendation, bathroom_vibe)
-    VALUES ('${staffAttitude}', '${service}', '${review}', '${recommendation}', '${bathroomVibe}')
-    RETURNING *`;
-    const data = await db.query(reviewSubmission);
-    // console.log('data test', data.rows);
-    res.locals.addedReview = data.rows[0];
-    return next();
-  } catch (err) {
-    return next({
-      log: `Express caught error in controller.submitReview: ${err}`,
-      message: {
-        err: 'An error occurred with submitting your review.',
-      },
-    });
-  }
-};
+//     const reviewSubmission = `INSERT INTO review (staff_attitude, service, review, recommendation, bathroom_vibe)
+//     VALUES ('${staffAttitude}', '${service}', '${review}', '${recommendation}', '${bathroomVibe}')
+//     RETURNING *`;
+//     const data = await db.query(reviewSubmission);
+//     // console.log('data test', data.rows);
+//     res.locals.addedReview = data.rows[0];
+//     return next();
+//   } catch (err) {
+//     return next({
+//       log: `Express caught error in controller.submitReview: ${err}`,
+//       message: {
+//         err: 'An error occurred with submitting your review.',
+//       },
+//     });
+//   }
+// };
 
 module.exports = restaurantController;
