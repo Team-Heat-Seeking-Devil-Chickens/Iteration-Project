@@ -1,6 +1,12 @@
 const express = require('express');
+
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
+
+// const fetch = require('node-fetch');
+const cors = require('cors');
+
+
 const app = express();
 const PORT = 3000;
 

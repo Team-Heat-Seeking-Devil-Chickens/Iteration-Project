@@ -1,49 +1,92 @@
+// RestaurantDisplay.jsx
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateRest } from '../features/restaurantsSlice';
 import RestaurantCard from '../components/RestaurantCard.jsx';
-//import that slice of state here
-
+import { Grid, Container, Typography } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+// Function to fetch restaurants from the API
 const RestaurantDisplay = () => {
-  //get the updated array of Restaurants from state
-  const restaurant = useSelector((state) => state.restaurants.restList);
-  // here can we initialize restaurant to get request to all restaurants?
+  // const restaurant = useSelector((state) => state.restaurants.restList);
   const dispatch = useDispatch();
-  // do a get request to all of our restaurants
+
+  const [location, setLocation] = useState(''); // State variable for location
+  const [term, setTerm] = useState(''); // State variable for restaurant term
+  const [radius, setRadius] = useState('');
+
+  const [restaurant, setRestaurant] = useState('');
 
   const fetchRestaurants = async () => {
     try {
-      const backendUrl = 'http://localhost:3000/restaurants';
-      const jsonData = await fetch(backendUrl);
-      const restaurantData = await jsonData.json();
-      dispatch(updateRest(restaurantData));
+      const API_KEY = 'API_KEY'; //
+
+      // Use the state values for location and term
+      // const url = `https://api.yelp.com/v3/businesses/search?location=${location}&term=${term}&radius=${radius}`;
+      const response = await fetch('/restaurants', {
+        headers: {
+          Authorization: `Bearer ${API_KEY}`,
+        },
+      });
+      const data = await response.json();
+
+      setRestaurant(data.businesses);
     } catch (err) {
-      console.log(`There was an error fetching restaurant data: ${err}`);
+      console.log('Error fetching restaurant data:', err);
     }
   };
 
-
-  // fetchRestaurants();
   useEffect(() => {
     fetchRestaurants();
-  }, [])
-
-  // grab that data --> array of objects
-
-  // invoke updateRest to update our restaurant state
-
-  // restaurant
-  //create an array to store all of the different RestaurantCards
-  const displayArray = [];
-
-  //iterate through the array of Restaurant objects
-  restaurant.forEach((el, index) => {
-    displayArray.push(<RestaurantCard key={index} info={el} />);
+  }, [location, term]);
+  //  make a Post request
+  // location, radius, category, term
+  // Customize Material UI theme
+  // {businesses: [{}, {}, {}]
+  // response.businesses
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#FFD700', // Gold color
+      },
+      secondary: {
+        main: '#ffffff', // White color
+      },
+    },
   });
-  //create an instance of Restaurant Card for each object
-  //pass the object down as a prop
 
-  return <div className='resDisplay'>{displayArray}</div>;
+  return (
+    <ThemeProvider theme={theme}>
+      <Container>
+        <Typography variant='h4' align='center' sx={{ my: 4 }}>
+          Discover Restaurants Near You
+        </Typography>
+
+        <div>
+          <input
+            type='text'
+            placeholder='Enter Location...'
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          />
+          <input
+            type='text'
+            placeholder='Enter Restaurant Term...'
+            value={term}
+            onChange={(e) => setTerm(e.target.value)}
+          />
+          <button onClick={fetchRestaurants}>Search</button>
+        </div>
+
+        <Grid container spacing={3} alignItems='stretch'>
+          {restaurant.map((el, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <RestaurantCard info={el} />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </ThemeProvider>
+  );
 };
 
 export default RestaurantDisplay;

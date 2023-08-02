@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {updateReview} from '../features/reviewSlice'
+import { updateReview } from '../features/reviewSlice';
 
 const ReviewContainer = () => {
   const dispatch = useDispatch();
   //const state = useSelector(state => console.log(state.bathroom))
 
   const [staffAtt, setStaffAtt] = useState(''); //stars  = service rating
-  const [service, setStarRating] = useState(1);//when the star is first 1, there is no star selected yet; this determines if a star is clicked or not
+  const [service, setStarRating] = useState(1); //when the star is first 1, there is no star selected yet; this determines if a star is clicked or not
   const [bathroom, setBathroom] = useState('');
   const [review, setReview] = useState('');
   const [recommend, setRecommend] = useState('');
@@ -15,7 +15,7 @@ const ReviewContainer = () => {
   function handleStars(index) {
     //index = the star that was clicked
     //if the current star that was clicked is equal to the previous star (0, or previously clicked on star) - set the starRating to 0. otherwise, if you clicked in a different, star, we set the starRating to the star that was clicked
-    setStarRating(index === service? 0 : index);
+    setStarRating(index === service ? 0 : index);
     // console.log('the star i just clicked is', index);
     //console.log('this is the current starRating', starRating) //not updating bc state changes are async
     // dispatch({ type: 'SET_STAR_RATING', payload: index });
@@ -29,10 +29,10 @@ const ReviewContainer = () => {
       staffAtt,
       review,
       service,
-      recommend
-    } 
+      recommend,
+    };
 
-    dispatch(updateReview(reviewForm))
+    dispatch(updateReview(reviewForm));
   }
 
   return (
@@ -51,7 +51,7 @@ const ReviewContainer = () => {
         </div>
         <div className='bathroomVibeContainer'>
           <label>What are the bathroom vibes? </label>
-          <select onChange={(e)=>setBathroom(e.target.value)}>
+          <select onChange={(e) => setBathroom(e.target.value)}>
             <option>Select</option>
             <option value='has cleaning products inside'>
               Has cleaning products inside the restroom
@@ -89,16 +89,72 @@ const ReviewContainer = () => {
         </div>
         <div className='recommend'>
           <span>Do you recommend? </span>
-          <select onChange={(e)=>setRecommend(e.target.value)}>
+          <select onChange={(e) => setRecommend(e.target.value)}>
             <option>Select</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
+            <option value='yes'>Yes</option>
+            <option value='no'>No</option>
           </select>
         </div>
-        <button type="submit">Submit Review</button>
+        <button type='submit'>Submit Review</button>
       </form>
     </div>
   );
 };
 
 export default ReviewContainer;
+// const App = (props) => {
+//   // const [user, setUser] = useState({});
+//   // const [loggedIn, setLoggedIn] = useState(false);
+//   // const [loading, setLoading] = useState(true);
+
+//   // useEffect(() => {
+//   //   const cookieToken = localStorage.getItem('cookieSSID');
+//   //   cookieToken ? fetchUserData(cookieToken) : setLoading(false);
+//   //   setLoggedIn(false);
+//   // }, [loggedIn]);
+
+//   // const fetchUserData = async () => {
+//   //   const user = await fetch('/secrets/user', {
+//   //     headers: {
+//   //       Authorization: `Bearer ${cookieSSID}`,
+//   //     },
+//   //   });
+
+//   //   if (user.ok) {
+//   //     const userData = await user.json();
+//   //     setUser(userData);
+//   //   } else {
+//   //     //
+//   //     setUser({});
+//   //   }
+
+//   //   setLoading(false);
+//   // };
+
+//   // if (loading) return null;
+
+//   return (
+//     <div id='app'>
+//       {/* <NavBar
+//         display={
+//           user.username ? (
+//             <RestaurantDisplay user={user} setUser={setUser} />
+//           ) : (
+//             <SignUp setLoggedIn={setLoggedIn} />
+//           )
+//         }
+//       /> */}
+//       <h1>(rec(commend), res(taurants), next)</h1>
+//       {/* {user.username ? (
+//         <RestaurantDisplay user={user} setUser={setUser} />
+//       ) : (
+//         <SignUp setLoggedIn={setLoggedIn} />
+//       )} */}
+//       <RestaurantQuery />
+//       <RestaurantDisplay />
+//       <ReviewContainer />
+//     </div>
+//   );
+// };
+
+// export default App;
