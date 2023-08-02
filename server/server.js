@@ -26,6 +26,10 @@ app.post('/reviews', controller.submitReview, (req, res) =>
   res.status(200).json(res.locals.addedReview)
 );
 
+// POST route: 'create' new user accounts to insert into users table
+
+// POST route: login user
+
 // unknown route handler
 app.use((req, res) => res.sendStatus(404));
 
