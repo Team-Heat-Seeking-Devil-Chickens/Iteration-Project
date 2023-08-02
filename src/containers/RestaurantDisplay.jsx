@@ -1,12 +1,13 @@
 // RestaurantDisplay.jsx
 import React, { useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateRest } from '../features/restaurantsSlice';
 import RestaurantCard from '../components/RestaurantCard.jsx';
 import { Grid, Container, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 // Function to fetch restaurants from the API
-const RestaurantDisplay = () => {
+const RestaurantDisplay = ({user, setUser}) => {
   // const restaurant = useSelector((state) => state.restaurants.restList);
   const dispatch = useDispatch();
 
@@ -22,7 +23,7 @@ const RestaurantDisplay = () => {
 
       // Use the state values for location and term
       // const url = `https://api.yelp.com/v3/businesses/search?location=${location}&term=${term}&radius=${radius}`;
-      const response = await fetch('/restaurants', {
+      const response = await fetch('/restaurant', {
         headers: {
           Authorization: `Bearer ${API_KEY}`,
         },
@@ -66,13 +67,13 @@ const RestaurantDisplay = () => {
             type='text'
             placeholder='Enter Location...'
             value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            onChange={(e) => setLocation(data.businesses.e.target.value)}
           />
           <input
             type='text'
             placeholder='Enter Restaurant Term...'
             value={term}
-            onChange={(e) => setTerm(e.target.value)}
+            onChange={(e) => setTerm(data.businesses.e.target.value)}
           />
           <button onClick={fetchRestaurants}>Search</button>
         </div>

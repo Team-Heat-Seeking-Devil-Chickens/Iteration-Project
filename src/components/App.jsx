@@ -4,15 +4,16 @@ import { useDispatch } from 'react-redux';
 import ReviewContainer from '../containers/ReviewContainer.jsx';
 import RestaurantDisplay from '../containers/RestaurantDisplay.jsx';
 import RestaurantQuery from '../containers/RestaurantQuery.jsx';
-import Signup from '../components/App.jsx';
-
+import Signup from './Signup.jsx';
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 {
   /* <h1>This is a header</h1>
 <h2>This is a secondary header</h2>
 <h3>This is a tertiary header</h3> */
 }
 
-const App = (props) => {
+const App = () => {
   const [user, setUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -23,8 +24,8 @@ const App = (props) => {
     setLoggedIn(false);
   }, [loggedIn]);
 
-  const fetchUserData = async () => {
-    const user = await fetch('/secrets/user', {
+  const fetchUserData = async (cookieSSID) => {
+    const user = await fetch('/main', {
       headers: {
         Authorization: `Bearer ${cookieSSID}`,
       },
@@ -45,24 +46,22 @@ const App = (props) => {
 
   return (
     <div id='app'>
-      {/* <NavBar
-        display={
-          user.username ? (
-            <RestaurantDisplay user={user} setUser={setUser} />
-          ) : (
-            <SignUp setLoggedIn={setLoggedIn} />
-          )
-        }
-      /> */}
-      <h1>(rec(commend), res(taurants), next)</h1>
-      {/* {user.username ? (
-        <RestaurantDisplay user={user} setUser={setUser} />
-      ) : (
-        <SignUp setLoggedIn={setLoggedIn} />
-      )} */}
-      <RestaurantQuery />
-      <RestaurantDisplay />
-      <ReviewContainer />
+      <Router>
+        <Routes>
+          {/* <Route path="/*" element={<Quiz />}/> */}
+
+          <Route
+            path='/*'
+            element={
+              user.username ? (
+                <RestaurantDisplay user={user} setUser={setUser} />
+              ) : (
+                <Signup setLoggedIn={setLoggedIn} />
+              )
+            }
+          />
+        </Routes>
+      </Router>
     </div>
   );
 };
