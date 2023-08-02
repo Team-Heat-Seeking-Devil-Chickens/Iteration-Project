@@ -6,9 +6,20 @@ import { updateRest } from '../features/restaurantsSlice';
 
 const RestaurantQuery = () => {
   // create an action for one drop-down
-  const query = useSelector((state) => state.query);
-  const dispatch = useDispatch();
+  // const query = useSelector((state) => state.query);
+  const [query, setQuery] = useState('');
 
+  // const dispatch = useDispatch();
+  const [allValues, setAllValues] = useState({
+    term: '',
+    radius: '',
+    price: '',
+    rating: '',
+    category: '',
+  });
+  const changeHandler = (e) => {
+    setAllValues({ ...allValues, [e.target.name]: e.target.value });
+  };
   /*
 - query will include all of the query selectors we need to filter our restaurants
 - get request to restaurants with the query parameters
@@ -18,13 +29,13 @@ const RestaurantQuery = () => {
 
   const fetchRestaurants = async () => {
     try {
-      const backendUrl = 'http://localhost:3000/restaurants';
+      const backendUrl = '/restaurants';
       const jsonData = await fetch(backendUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'Application/JSON',
         },
-        body: JSON.stringify(query),
+        params: JSON.stringify(radius, term, price, rating),
       });
       const restaurantData = await jsonData.json();
       dispatch(updateRest(restaurantData));
@@ -35,7 +46,7 @@ const RestaurantQuery = () => {
 
   useEffect(() => {
     fetchRestaurants();
-  }, [query]);
+  }, [allValues]);
 
   return (
     <div>
@@ -52,6 +63,7 @@ const RestaurantQuery = () => {
             name='restaurant'
             type='text'
             id='restaurantName'
+            value={term}
             onChange={(e) => dispatch(updateQuery(['name', e.target.value]))}
           />
         </label>
@@ -61,7 +73,8 @@ const RestaurantQuery = () => {
             className='dropDown'
             name='cuisine'
             id='cuisineSelector'
-            onChange={(e) => dispatch(updateQuery(['cuisine', e.target.value]))}
+            value={category}
+            onChange={changeHandler}
           >
             <option value=''>Select</option>
             <option value='Mexican'>Mexican</option>
@@ -73,7 +86,7 @@ const RestaurantQuery = () => {
             <option value='Japanese'>Japanese</option>
           </select>
         </label>
-        <label className='dropDownLabel' htmlFor='ambience'>
+        {/* <label className='dropDownLabel' htmlFor='ambience'>
           Ambience:
           <select
             className='dropDown'
@@ -90,16 +103,15 @@ const RestaurantQuery = () => {
             <option value='friendly'>Friendly</option>
             <option value='country'>Country</option>
           </select>
-        </label>
+        </label> */}
         <label className='dropDownLabel' htmlFor='price-tier'>
           Price-Tier:
           <select
             className='dropDown'
             name='price-tier'
             id='priceSelector'
-            onChange={(e) =>
-              dispatch(updateQuery(['price_tier', e.target.value]))
-            }
+            value={price}
+            onChange={changeHandler}
           >
             <option value=''>select</option>
             <option value='exquisite'>Exquisite</option>
@@ -110,7 +122,7 @@ const RestaurantQuery = () => {
           </select>
         </label>
 
-        <label htmlFor='plantBase' className='dropDownLabel'>
+        {/* <label htmlFor='plantBase' className='dropDownLabel'>
           Vegetarian options?
           <select
             className='dropDown'
@@ -124,9 +136,9 @@ const RestaurantQuery = () => {
             <option value='1'>Yes</option>
             <option value='0'>No</option>
           </select>
-        </label>
+        </label> */}
 
-        <label htmlFor='good_for_groups' className='dropDownLabel'>
+        {/* <label htmlFor='good_for_groups' className='dropDownLabel'>
           Good for Groups?
           <select
             className='dropDown'
@@ -140,7 +152,7 @@ const RestaurantQuery = () => {
             <option value='1'>Yes</option>
             <option value='0'>No</option>
           </select>
-        </label>
+        </label> */}
 
         <label htmlFor='locationRad' className='dropDownLabel'>
           Location Radius
@@ -148,9 +160,8 @@ const RestaurantQuery = () => {
             className='dropDown'
             name='Location'
             id='locationRadius'
-            onChange={(e) =>
-              dispatch(updateQuery(['location_radius', e.target.value]))
-            }
+            value={radius}
+            onChange={changeHandler}
           >
             <option value=''>select</option>
             <option value='5'>5 km</option>
