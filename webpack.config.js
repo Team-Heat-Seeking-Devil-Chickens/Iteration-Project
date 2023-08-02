@@ -82,4 +82,7 @@ module.exports = {
       template: 'src/template.html',
     }),
   ],
+  resolve: {
+    extensions: ['.js', '.jsx']
+  }
 };
