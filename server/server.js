@@ -19,9 +19,10 @@ app.get('/restaurants', controller.getRestaurants, (req, res) =>
   res.status(200).json(res.locals.restaurants)
 );
 
-app.post('/restaurants', controller.getRestaurants, (req, res) =>
-  res.status(200).json(res.locals.restaurants)
-);
+// //TODO: What does this do?
+// app.post('/restaurants', controller.getRestaurants, (req, res) =>
+//   res.status(200).json(res.locals.restaurants)
+// );
 
 // POST route: 'create' entries to insert into reviews table
 app.post('/reviews', controller.submitReview, (req, res) =>
@@ -32,15 +33,14 @@ app.post('/reviews', controller.submitReview, (req, res) =>
 //-----> USER ROUTES START
 
 // POST route: 'create' new user accounts to insert into users table
-app.post('/register', userController.authenticateRegister, (req, res) => {
+app.post('/signup', userController.authenticateRegister, (req, res) => {
   res.status(201).json(res.locals.accessToken);
 });
 
 
 // POST route: login user
 app.post('/login', userController.authenticateLogin, (req, res) =>
-  res.status(200)
-  // res.status(200).json(res.locals.accessToken)
+  res.status(200).json({ isSuccessful: true })
 );
 //-----> USER ROUTES END
 
@@ -48,7 +48,7 @@ app.post('/login', userController.authenticateLogin, (req, res) =>
 //-----> GENERAL USE ROUTES START
 // unknown route handler
 app.use((req, res) => res.sendStatus(404));
-
+``
 // global error handler
 app.use((err, req, res, next) => {
   const defaultErr = {

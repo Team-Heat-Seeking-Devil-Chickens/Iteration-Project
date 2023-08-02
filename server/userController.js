@@ -14,7 +14,20 @@ const userController = {
           pw: hashedPassword
         };
         // res.locals.user = user TO USE LATER WITH REAL AJAX CALL
-        // res.locals.accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET); //creates new JWT as a string
+        res.locals.accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET); //creates new JWT as a string
+
+        //creates cookie
+        res.cookie('userToken', accessToken, {
+          httpOnly: true,
+          domain: 'localhost',
+          path: '/',
+          expires: new Date(Date.now() + 9000000),
+        });
+
+        res.locals.succussLoginData = {
+          message: 'Successfully logged in.',
+          creatorLoggedIn: req.creatorRecord.username,
+        };
         return next();
       })
       .catch((err) => {
@@ -54,6 +67,30 @@ const userController = {
           message: { err: 'Failed to login.' },
         });
       })
+  },
+
+  authenticate: (req, res, next) => {
+    jwt.verify(
+      req.cookies.usertoken,
+      process.env.JWT_SECRET,
+      (err, payload) => {
+        if (err) {
+          // console.log(err);
+          // res.status(401).json({ verified: false });
+          return next({
+            log: 'userController.authenticate error:',
+            status: 401,
+            message: { error: 'Invalid credentials.' },
+          })
+        } else {
+          console.log(payload);
+
+          req.jwtpayload = payload;
+
+          next();
+        }
+      }
+    );
   }
 
 };

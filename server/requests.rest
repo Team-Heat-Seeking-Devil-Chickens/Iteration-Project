@@ -1,3 +1,21 @@
+// GET route: 'read' queries to restaurants table
+GET http://localhost:3000/restaurants
+
+###
+
+// POST route:
+POST http://localhost:3000/restaurants
+
+###
+
+// POST route: 'create' entries to insert into reviews table
+POST http://localhost:3000/reviews
+
+
+
+
+//-----> userRoutes
+//REGISTER
 POST http://localhost:3000/register
 content-type: application/json
 
@@ -10,6 +28,7 @@ content-type: application/json
 
 ###
 
+//LOGIN
 POST http://localhost:3000/login
 content-type: application/json
 
