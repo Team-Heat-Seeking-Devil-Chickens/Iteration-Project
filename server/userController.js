@@ -19,7 +19,7 @@ const userController = {
       })
       .catch((err) => {
         return next({
-          log: `userController.authenticateRegister failed to create JWT token, ${err.message} ${JSON.stringify(users)}.`,
+          log: `userController.authenticateRegister failed to create JWT token in user registration, ${err.message}.`,
           status: 500,
           message: { err: 'Failed to create new JWT token.' },
         });
@@ -39,13 +39,12 @@ const userController = {
       });
     }
 
-    //compare passwords
+    //compare passwords and save JWT to accessToken prop
     bcrypt.compare(req.body.pw, user.pw)
       .then(match => {
         if (match) {
           res.locals.accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
           return next();
-
         }
       })
       .catch(() => {
