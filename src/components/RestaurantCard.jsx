@@ -10,9 +10,10 @@ import ReviewsModal from './ReviewsModal.jsx';
 
 //deconstruct passed down info prop
 const RestaurantCard = ({ info }) => {
+  
   const {
     name,
-    catagoies,
+    catagories,
     rating,
     location,
     radius,
@@ -20,6 +21,7 @@ const RestaurantCard = ({ info }) => {
     reviews,
     imageUrl,
   } = info;
+
 
   return (
     <Card>
