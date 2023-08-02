@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const app = express();
 const PORT = 3000;
 
-const restaurantController = require ('./Controllers/restaurantController.js')
+const restaurantController = require('./Controllers/restaurantController.js')
 const cookieController = require('./Controllers/cookieController.js');
 const sessionController = require('./Controllers/sessionController.js');
 const userController = require('./Controllers/userController.js');
@@ -48,10 +48,21 @@ app.delete('/logout',
   cookieController.removeCookies,
   (req, res) => res.status(200).json({ message: 'session has ended' }));
 
-//restaurant get
-app.get('/restaurant', restaurantController.getRestaurants,(req,res) => {
+// restaurant get
+app.get('/restaurant', restaurantController.getRestaurants, (req, res) => {
   res.status(200).json(res.locals.restaurants)
 })
+
+// reviews get
+app.get('/reviews', restaurantController.getReviews, (req, res) => {
+  res.status(200).json(res.locals.result)
+})
+
+// review post
+app.post('/reviews', restaurantController.submitReview, (req, res) => {
+  res.status(200).json(res.locals.result)
+})
+
 
 // 404
 app.use((req, res) => res.status(404).send('page not found, L'))
@@ -61,7 +72,7 @@ app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'global error handler caught unknown middleware error',
     status: 500,
-    message: { err: 'an error occurred'},
+    message: { err: 'an error occurred' },
   };
   const errObj = Object.assign({}, defaultErr, err);
   console.log(errObj.log);

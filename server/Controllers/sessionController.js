@@ -44,24 +44,24 @@ sessionController.isLoggedIn = (req, res, next) => {
 }
 
 sessionController.endSession = (req, res, next) => {
-  Session.findOneAndDelete({cookieId: req.cookies.ssid })
-  .then((session) => {
-    if (!session) {
-      return next({
-        log: 'error in sessionController.endSession',
-        message: {
-          err: 'no active session'
-        }
-      })
-    } else {
-      return next();
-    }
-  }).catch(err => next({
-    log: 'error in sessionController.endSession',
-    message: {
-      err: `error finding session in db: ${err}`
-    }
-  }))
+  Session.findOneAndDelete({ cookieId: req.cookies.ssid })
+    .then((session) => {
+      if (!session) {
+        return next({
+          log: 'error in sessionController.endSession',
+          message: {
+            err: 'no active session'
+          }
+        })
+      } else {
+        return next();
+      }
+    }).catch(err => next({
+      log: 'error in sessionController.endSession',
+      message: {
+        err: `error finding session in db: ${err}`
+      }
+    }))
 }
 
 module.exports = sessionController;
