@@ -4,9 +4,6 @@ const format = require('pg-format');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-let users = []; //DELETE ME! i am a temporary database replacement
-
-
 const userController = {
   authenticateRegister: (req, res, next) => {
     bcrypt.hash(req.body.pw, 10).then(hashedPassword => {
@@ -17,7 +14,6 @@ const userController = {
           pw: hashedPassword
         };
         // res.locals.user = user TO USE LATER WITH REAL AJAX CALL
-        users.push(user); //TODO: DELETE ME LATER
         // res.locals.accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET); //creates new JWT as a string
         return next();
       })
@@ -31,12 +27,25 @@ const userController = {
   },
 
   authenticateLogin: (req, res, next) => {
-    //find user in db
-    const user = users.find(user => user.name === req.body.name);
-    bcrypt.compare(req.body.password, user.password)
+    //find user in db via email first
+    // const user = users.find(user => user.email === req.body.email);
+    //refactor to thenable
+    if (!user) {
+      // User not found, return an error response indicating invalid credentials
+      return next({
+        log: 'userController.authenticateLogin failed: User not found.',
+        status: 401, // Unauthorized status code
+        message: { error: 'Invalid credentials.' },
+      });
+    }
+
+    //compare passwords
+    bcrypt.compare(req.body.pw, user.pw)
       .then(match => {
         if (match) {
           res.locals.accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+          return next();
+
         }
       })
       .catch(() => {

@@ -39,7 +39,8 @@ app.post('/register', userController.authenticateRegister, (req, res) => {
 
 // POST route: login user
 app.post('/login', userController.authenticateLogin, (req, res) =>
-  res.status(200).json(res.locals.accessToken)
+  res.status(200)
+  // res.status(200).json(res.locals.accessToken)
 );
 //-----> USER ROUTES END
 

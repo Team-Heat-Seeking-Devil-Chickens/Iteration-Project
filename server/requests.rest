@@ -7,3 +7,15 @@ content-type: application/json
   "email": "test@gmail.com",
   "pw": "testingPW123"
 }
+
+###
+
+POST http://localhost:3000/login
+content-type: application/json
+
+{
+  "email": "test@gmail.com",
+  "pw": "testingPW123"
+}
+
+###
