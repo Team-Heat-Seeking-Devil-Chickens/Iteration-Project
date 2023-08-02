@@ -13,11 +13,9 @@ POST http://localhost:3000/reviews
 
 
 
+###
 
-//-----> userRoutes
-//REGISTER
-POST http://localhost:3000/register
-content-type: application/json
+POST http://localhost:3000/signup
 
 {
   "firstName": "testName",

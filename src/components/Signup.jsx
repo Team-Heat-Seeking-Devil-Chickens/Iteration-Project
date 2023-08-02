@@ -37,17 +37,18 @@ export default function SignUp() {
         email: email,
         pw: password,
       }
-  
+
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       };
-  
+
     fetch(`/signup`, requestOptions)
       .then(response => response.json())
       .then((data) => {
         // If successful, store session, username and go to home
+        console.log(data) //TODO: delete when done testing
         if (data.err) alert('Username already exists.');
         else {
           localStorage.setItem('email', data.email);
