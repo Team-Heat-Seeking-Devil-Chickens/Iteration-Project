@@ -1,20 +1,61 @@
 import React from 'react';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import Rating from '@mui/material/Rating';
+import Typography from '@mui/material/Typography';
+import CardActions from '@mui/material/CardActions';
+import ReviewsModal from './ReviewsModal.jsx';
 
 //deconstruct passed down info prop
 const RestaurantCard = ({ info }) => {
-  const {name, ambience, cuisine, price_tier, plant_based, location_radius, good_for_groups} = info;
+  const {
+    name,
+    catagoies,
+    rating,
+    location,
+    radius,
+    price,
+    reviews,
+    imageUrl,
+  } = info;
 
   return (
-    <div className='resCard'>
-      <h1>{name}</h1>
-      <h2>Cuisine: {cuisine}</h2>
-      <p><strong>Price Tier:</strong> {price_tier}</p>
-      <p><strong>Ambience:</strong> {ambience}</p>
-      <p><strong>Plant-Based?</strong> {plant_based === '0' ? 'no' : 'yes'}</p>
-      <p><strong>Location Radius:</strong> {location_radius} km</p>
-      <p><strong>Good for Groups?</strong> {good_for_groups === '0' ? 'no' : 'yes'}</p>
-      {/* <p>Nathan's Mom approves? yes</p> */}
-    </div>
+    <Card>
+      <CardHeader title={name} subheader={`price tier: ${price}`} />
+      <CardMedia
+        component="img"
+        height="194"
+        image={imageUrl}
+        alt="where can we get alt image text from api?"
+      />
+      <CardContent>
+        <Typography component="legend">
+          <strong>Rating:</strong>
+          <Rating
+            name="read-only"
+            value={rating}
+            /*add rating value from */ readOnly
+          />
+        </Typography>
+        <Typography>
+          <strong>Price Tier:</strong> {price}
+        </Typography>
+        <Typography>
+          <strong>Location:</strong> {location}
+        </Typography>
+        <Typography>
+          <strong>Location Radius:</strong> {radius} km
+        </Typography>
+        <Typography>
+          <strong>Cuisine:</strong> {catagoies}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <ReviewsModal reviews={reviews} />
+      </CardActions>
+    </Card>
   );
 };
 
