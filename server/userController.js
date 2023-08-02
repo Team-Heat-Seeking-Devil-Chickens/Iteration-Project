@@ -4,18 +4,26 @@ const format = require('pg-format');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
+let users = []; //DELETE ME! i am a temporary database replacement
+
+
 const userController = {
   authenticateRegister: (req, res, next) => {
-    bcrypt.hash(req.body.password, 10).then(hashedPassword => {
-        const user = { name: req.body.name, password: hashedPassword };
+    bcrypt.hash(req.body.pw, 10).then(hashedPassword => {
+        const user = {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          email: req.body.email,
+          pw: hashedPassword
+        };
         // res.locals.user = user TO USE LATER WITH REAL AJAX CALL
         users.push(user); //TODO: DELETE ME LATER
-        res.locals.accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET); //creates new JWT as a string
+        // res.locals.accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET); //creates new JWT as a string
         return next();
       })
       .catch((err) => {
         return next({
-          log: `userController.authenticateRegister failed to create JWT token, ${err.message}.`,
+          log: `userController.authenticateRegister failed to create JWT token, ${err.message} ${JSON.stringify(users)}.`,
           status: 500,
           message: { err: 'Failed to create new JWT token.' },
         });
@@ -39,6 +47,8 @@ const userController = {
         });
       })
   }
-  
+
 };
+
+module.exports = userController;
 

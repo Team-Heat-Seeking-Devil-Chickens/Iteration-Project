@@ -1,5 +1,4 @@
 const express = require('express');
-const fetch = require('node-fetch');
 const cors = require('cors'); //might be optional?
 
 const app = express();
@@ -32,23 +31,20 @@ app.post('/reviews', controller.submitReview, (req, res) =>
 
 //-----> USER ROUTES START
 
-let users = []; //DELETE ME! i am a temporary database replacement
-
 // POST route: 'create' new user accounts to insert into users table
-app.post('/register', userController.authenticateRegister (req, res) =>
-  res.status().json(res.locals.accessToken)
-);
+app.post('/register', userController.authenticateRegister, (req, res) => {
+  res.status(201).json(res.locals.accessToken);
+});
+
 
 // POST route: login user
-app.post('/login', userController.authenticateLogin (req, res) =>
-  res.status().json(res.locals.accessToken)
+app.post('/login', userController.authenticateLogin, (req, res) =>
+  res.status(200).json(res.locals.accessToken)
 );
-
-
-
-
 //-----> USER ROUTES END
 
+
+//-----> GENERAL USE ROUTES START
 // unknown route handler
 app.use((req, res) => res.sendStatus(404));
 
@@ -67,3 +63,4 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server is running on localhost:${PORT}...`);
 });
+//-----> GENERAL USE ROUTES END
