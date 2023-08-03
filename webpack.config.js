@@ -31,20 +31,12 @@ module.exports = {
       directory: path.resolve(__dirname, 'dist'),
     },
     port: 8080,
-    // proxy: [ //redirects requests to host 3000
-    //   {
-    //     context: ['/user', '/restaurants', '/signup', '/login'], //more might be needed to be added later
-    //     target: 'http://localhost:3000'
-    //   },
-    // ],
-    proxy: {
-      '/login': 'http://localhost:3000',
-      '/stats': 'http://localhost:3000',
-      '/main': 'http://localhost:3000',
-      // '/signup': 'http://localhost:3000',
-      '/logout': 'http://localhost:3000'
-      // add more as we add more endpoints
-    },
+    proxy: [ //redirects requests to host 3000
+      {
+        context: ['/user', '/restaurants', '/login', '/signup'], //more might be needed to be added later
+        target: 'http://localhost:3000'
+      },
+    ],
     open: true,
     hot: true,
     compress: true,

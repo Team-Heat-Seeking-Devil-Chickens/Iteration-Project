@@ -1,7 +1,5 @@
 const express = require('express');
-
-const cors = require('cors');
-
+const cors = require('cors'); //might be optional?
 const app = express();
 
 const PORT = 3000;
@@ -34,10 +32,7 @@ app.post('/reviews', controller.submitReview, (req, res) =>
 //-----> USER ROUTES START
 
 // POST route: 'create' new user accounts to insert into users table
-app.post('/signup', userController.authenticateSignup, (req, res) => {
-  res.status(201).json(res.locals.accessToken)
-  // res.status(201).json(res.locals.accessToken).send(res.locals.successLoginData);
-});
+app.post('/signup', userController.authenticateSignup, (req, res) => {res.status(201).json(res.locals.accessToken);});
 
 
 // POST route: login user
@@ -50,7 +45,7 @@ app.post('/login', userController.authenticateLogin, (req, res) =>
 //-----> GENERAL USE ROUTES START
 // unknown route handler
 app.use((req, res) => res.sendStatus(404));
-``
+
 // global error handler
 app.use((err, req, res, next) => {
   const defaultErr = {

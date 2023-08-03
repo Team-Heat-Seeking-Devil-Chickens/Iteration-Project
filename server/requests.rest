@@ -16,6 +16,7 @@ POST http://localhost:3000/reviews
 ###
 
 POST http://localhost:3000/signup
+content-type: application/json
 
 {
   "firstName": "testName",
