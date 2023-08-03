@@ -3,7 +3,7 @@ const db = require('./models.js');
 const format = require('pg-format');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-
+require('dotenv').config();
 const userController = {
   authenticateSignup: (req, res, next) => {
     bcrypt

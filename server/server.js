@@ -32,7 +32,7 @@ app.post('/reviews', controller.submitReview, (req, res) =>
 //-----> USER ROUTES START
 
 // POST route: 'create' new user accounts to insert into users table
-app.post('/signup', userController.authenticateSignup, (req, res) => {res.status(201).json(res.locals.accessToken);});
+app.post('/signup', userController.authenticateSignup, (req, res) => {res.status(201).json(res.locals.accessToken)});
 
 
 // POST route: login user

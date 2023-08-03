@@ -40,7 +40,6 @@ export default function SignUp() {
         email: email,
         pw: password,
       }
-
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
