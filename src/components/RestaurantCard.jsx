@@ -11,7 +11,7 @@ import {
 import ReviewsModal from './ReviewsModal.jsx';
 
 //deconstruct passed down info prop { info }
-const RestaurantCard = ({info, user, setUser}) => {
+const RestaurantCard = ({info, user, setUser, username, setUsername }) => {
   const {
     id,
     // user_id,
@@ -25,8 +25,8 @@ const RestaurantCard = ({info, user, setUser}) => {
     image_url,
   } = info;
 
-  info.username = user
-
+  // info.username = user
+  console.log(username)
   // const info = {
   //   name: 'Restaurant Name',
   //   catagories: ['Mexican', 'Thai', 'Japanese'],

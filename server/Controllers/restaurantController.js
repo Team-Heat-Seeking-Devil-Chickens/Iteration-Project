@@ -2,24 +2,31 @@
 const { Review, User } = require('../Models/UserModel.js');
 
 const restaurantController = {};
-const token = 'lItDezxkVYm6ixarycydsXCzq1qxDCxluiOcwRcApL90rwoKYwcpCnyryDIlO3Gl_3YHxQiMJjOvoD4scgSFSkjC60GHygLj8EaUPxZtEdCQMRiO85WdqFN8U4rJZHYx'
+const token =
+  'j0nRAAf-E_JVWfqXe8d5FZgIODP5JM1Hl2CiJ2CHpRnGo22CLflVZxsogEVFW8wc9mIgzH1trXnzniaSgWH1QfP5NxKkmjwLsHvfvTJQSL-2BvZ0f8JQXduz7u_LZHYx';
 restaurantController.getRestaurants = async (req, res, next) => {
   try {
-    const { zipcode, categories, price, radius } = req.body
+    const { zipcode, categories, price, radius } = req.body;
     let csvString;
+    console.log(zipcode);
     if (categories) {
       csvString = categories.join(',');
     } else {
-      csvString = ''; 
+      csvString = '';
     }
-    let query = `https://api.yelp.com/v3/businesses/search?${zipcode ? `&location=${zipcode}` : ''}&term=food&${categories ? `&categories=${csvString}` : ''}${price ? `&price=${price}` : ''}${radius ? `&radius=${radius}` : ''}&sort_by=distance&limit=40`
+    let query = `https://api.yelp.com/v3/businesses/search?${
+      zipcode ? `&location=${zipcode}` : ''
+    }&term=food&${categories ? `&categories=${csvString}` : ''}${
+      price ? `&price=${price}` : ''
+    }${radius ? `&radius=${radius}` : ''}&sort_by=distance&limit=40`;
     const restaurantsList = await fetch(query, {
-      method: "GET", headers: {
-        Authorization: `Bearer ${token}`
-      }
-    })
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     res.locals.restaurants = await restaurantsList.json();
-    next()
+    next();
   } catch (err) {
     return next({
       log: `Express caught error in restaurantController.getRestaurants: ${err}`,
@@ -32,13 +39,18 @@ restaurantController.getRestaurants = async (req, res, next) => {
 
 restaurantController.getReviews = async (req, res, next) => {
   try {
-    const { restaurant_id, username_id, } = req.body
-    const reviewList = await Review.findOne({ restaurant_id: restaurant_id })
-      .then((response) => response.json()
-        .then((result) => {
-          res.locals.result = { reviews: result.reviews, rating: (result.total / result.count) }
-          next()
-        }))
+    const { restaurant_id, username_id } = req.body;
+    const reviewList = await Review.findOne({
+      restaurant_id: restaurant_id,
+    }).then((response) =>
+      response.json().then((result) => {
+        res.locals.result = {
+          reviews: result.reviews,
+          rating: result.total / result.count,
+        };
+        next();
+      })
+    );
   } catch (err) {
     return next({
       log: `Express caught error in controller.getRestaurants: ${err}`,
@@ -55,32 +67,55 @@ restaurantController.submitReview = async (req, res, next) => {
     const decodedString = decodeURIComponent(username_id);
     const sanitizedId = decodedString.replace(/^j:"|"/g, '');
     let name;
-    await User.findOne({ _id: sanitizedId })
-      .then((response) => {
-        name = response.username})
-    const response = await Review.findOne({ restaurantID: restaurant_id })
+    await User.findOne({ _id: sanitizedId }).then((response) => {
+      name = response.username;
+    });
+    const response = await Review.findOne({ restaurantID: restaurant_id });
     if (!response) {
-      Review
-        .create({ restaurantID: restaurant_id, reviews: [{ username: name, rating: rating, review: review }], total: rating, count: 1 })
-        .then(() => {
-          Review.findOne({ restaurantID: restaurant_id })
-            .then((response) => {
-              res.locals.result = { reviews: response.reviews, totalRating: (Math.round((response.total / response.count) * 2) / 2).toFixed(1) }
-            })
-            .then(() => { return next() })
-        })
+      Review.create({
+        restaurantID: restaurant_id,
+        reviews: [{ username: name, rating: rating, review: review }],
+        total: rating,
+        count: 1,
+      }).then(() => {
+        Review.findOne({ restaurantID: restaurant_id })
+          .then((response) => {
+            res.locals.result = {
+              reviews: response.reviews,
+              totalRating: (
+                Math.round((response.total / response.count) * 2) / 2
+              ).toFixed(1),
+            };
+          })
+          .then(() => {
+            return next();
+          });
+      });
     } else {
-      Review
-        .updateOne({ restaurantID: restaurant_id }, { $push: { reviews: { username: name, rating: rating, review: review } } })
+      Review.updateOne(
+        { restaurantID: restaurant_id },
+        {
+          $push: {
+            reviews: { username: name, rating: rating, review: review },
+          },
+        }
+      )
         .updateOne({ restaurantID: restaurant_id }, { $inc: { count: 1 } })
         .updateOne({ restaurantID: restaurant_id }, { $inc: { total: rating } })
         .then(() => {
           Review.findOne({ restaurantID: restaurant_id })
             .then((response) => {
-              res.locals.result = { reviews: response.reviews, totalRating: (Math.round((response.total / response.count) * 2) / 2).toFixed(1) }
+              res.locals.result = {
+                reviews: response.reviews,
+                totalRating: (
+                  Math.round((response.total / response.count) * 2) / 2
+                ).toFixed(1),
+              };
             })
-            .then(() => { return next() })
-        })
+            .then(() => {
+              return next();
+            });
+        });
     }
   } catch (err) {
     return next({
