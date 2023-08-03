@@ -6,18 +6,8 @@ const token =
   'j0nRAAf-E_JVWfqXe8d5FZgIODP5JM1Hl2CiJ2CHpRnGo22CLflVZxsogEVFW8wc9mIgzH1trXnzniaSgWH1QfP5NxKkmjwLsHvfvTJQSL-2BvZ0f8JQXduz7u_LZHYx';
 restaurantController.getRestaurants = async (req, res, next) => {
   try {
-    const { zipcode, categories, price, radius } = req.body;
-    let csvString;
-    if (categories) {
-      csvString = categories.join(',');
-    } else {
-      csvString = '';
-    }
-    let query = `https://api.yelp.com/v3/businesses/search?${
-      zipcode ? `&location=${zipcode}` : ''
-    }&term=food&${categories ? `&categories=${csvString}` : ''}${
-      price ? `&price=${price}` : ''
-    }${radius ? `&radius=${radius}` : ''}&sort_by=distance&limit=40`;
+    const { zipcode, categories, price, radius } = req.body
+    let query = `https://api.yelp.com/v3/businesses/search?${zipcode ? `&location=${zipcode}` : ''}&term=food&${categories ? `&categories=${categories}` : ''}${price ? `&price=${price}` : ''}${radius ? `&radius=${radius}` : ''}&sort_by=distance&limit=40`
     const restaurantsList = await fetch(query, {
       method: 'GET',
       headers: {
