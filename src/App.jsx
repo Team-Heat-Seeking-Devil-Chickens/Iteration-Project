@@ -11,7 +11,7 @@ import Signup from "./components/Signup.jsx";
 const App = () => {
 
   return (
-  
+
     <ThemeProvider theme={theme}>
       <CssBaseline enableColorScheme />
         <BrowserRouter>

@@ -33,7 +33,7 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
- 
+
     const user = {
       email: data.get('email'),
       password: data.get('password')
@@ -46,9 +46,9 @@ export default function Login() {
        headers: {
         'Content-Type': 'application/json'
        },
-       body: JSON.stringify(body) 
+       body: JSON.stringify(body)
       })
-      const data = await response.json() 
+      const data = await response.json()
       // get res.locals authetintication and useNavigate to approriate url path
 
     }

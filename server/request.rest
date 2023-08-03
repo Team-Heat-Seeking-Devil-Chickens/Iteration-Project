@@ -1,0 +1,41 @@
+// GET route: 'read' queries to restaurants table
+GET http://localhost:3000/restaurants
+
+###
+
+// POST route:
+POST http://localhost:3000/restaurants
+
+###
+
+// POST route: 'create' entries to insert into reviews table
+POST http://localhost:3000/reviews
+
+
+
+###
+
+POST http://localhost:3000/signup
+content-type: application/json
+
+{
+  "firstName": "testName",
+  "lastName": "testLastName",
+  "email": "test@gmail.com",
+  "pw": "testingPW123"
+}
+
+###
+
+//LOGIN
+POST http://localhost:3000/login
+content-type: application/json
+
+{
+  "email": "test@gmail.com",
+  "pw": "testingPW123"
+}
+
+###
+
+
