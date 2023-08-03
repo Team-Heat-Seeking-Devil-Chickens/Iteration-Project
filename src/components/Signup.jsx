@@ -37,7 +37,7 @@ export default function Signup({ setLoggedIn }) {
               localStorage.setItem('cookieSSID', data._id);
               localStorage.setItem('zipcode', data.zipcode);
               setLoggedIn(true);
-              return navigate('/restaurants');
+              return navigate('/restaurant');
             })
             .catch((err) => console.error(err));
         }

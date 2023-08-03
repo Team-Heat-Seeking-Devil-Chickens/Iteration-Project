@@ -55,7 +55,7 @@ app.delete('/logout',
   (req, res) => res.status(200).json({ message: 'session has ended' }));
 
 // restaurant get
-app.get('/restaurant', restaurantController.getRestaurants, (req, res) => {
+app.post('/restaurant', restaurantController.getRestaurants, (req, res) => {
   res.status(200).json(res.locals.restaurants)
 })
 

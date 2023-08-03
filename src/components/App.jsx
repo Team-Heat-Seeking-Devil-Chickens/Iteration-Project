@@ -18,48 +18,50 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const cookieToken = localStorage.getItem('cookieSSID');
-    cookieToken ? fetchUserData(cookieToken) : setLoading(false);
-    setLoggedIn(false);
-  }, [loggedIn]);
+  // useEffect(() => {
+  //   const cookieToken = localStorage.getItem('cookieSSID');
+  //   console.log(cookieToken)
+  //   cookieToken ? fetchUserData(cookieToken) : setLoading(false);
+  //   setLoggedIn(false);
+  // }, [loggedIn]);
 
-  const fetchUserData = async (cookieSSID) => {
-    const user = await fetch('/main', {
-      headers: {
-        Authorization: `Bearer ${cookieSSID}`,
-      },
-    });
+  // const fetchUserData = async (cookieSSID) => {
+  //   const user = await fetch('/main', {
+  //     headers: {
+  //       Authorization: `Bearer ${cookieSSID}`,
+  //     },
+  //   });
 
-    if (user.ok) {
-      const userData = await user.json();
-      setUser(userData);
-    } else {
-      //
-      setUser({});
-    }
+  //   if (user.ok) {
+  //     const userData = await user.json();
+  //     setUser(userData);
+  //   } else {
+  //     //
+  //     setUser({});
+  //   }
 
-    setLoading(false);
-  };
+  //   setLoading(false);
+  // };
 
-  if (loading) return null;
+  // if (loading) return null;
 
   return (
     <div id='app'>
       <Router>
         <Routes>
+          <Route index element={user.username ? <RestaurantDisplay user={user} setUser={setUser}/> : <Signup setLoggedIn={setLoggedIn}/>}/>
           {/* <Route path="/*" element={<Quiz />}/> */}
-
-          <Route
+          {/* <Route
             path='/*'
             element={
-              user.username ? (
+              user.username ? 
                 <RestaurantDisplay user={user} setUser={setUser} />
-              ) : (
+               : 
                 <Signup setLoggedIn={setLoggedIn} />
-              )
+              
             }
-          />
+          /> */}
+          <Route path='/restaurant' element={<RestaurantDisplay user={user} setUser={setUser}/>}/>
         </Routes>
       </Router>
     </div>

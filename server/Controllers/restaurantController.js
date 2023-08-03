@@ -2,11 +2,16 @@
 const { Review, User } = require('../Models/UserModel.js');
 
 const restaurantController = {};
-const token = 'jRAUTCjFbYX0mAx44ncfKVTj4ca8bJYWfHt3qfVk10M928uff6eCHu731g9-lIqswaeVEkjtjQnmgrc34xCSVzLhQbB9aCPGV31cfBfHsxrQyZV82vqjRitvLk7JZHYx'
+const token = 'lItDezxkVYm6ixarycydsXCzq1qxDCxluiOcwRcApL90rwoKYwcpCnyryDIlO3Gl_3YHxQiMJjOvoD4scgSFSkjC60GHygLj8EaUPxZtEdCQMRiO85WdqFN8U4rJZHYx'
 restaurantController.getRestaurants = async (req, res, next) => {
   try {
     const { zipcode, categories, price, radius } = req.body
-    const csvString = categories.join(",");
+    let csvString;
+    if (categories) {
+      csvString = categories.join(',');
+    } else {
+      csvString = ''; 
+    }
     let query = `https://api.yelp.com/v3/businesses/search?${zipcode ? `&location=${zipcode}` : ''}&term=food&${categories ? `&categories=${csvString}` : ''}${price ? `&price=${price}` : ''}${radius ? `&radius=${radius}` : ''}&sort_by=distance&limit=40`
     const restaurantsList = await fetch(query, {
       method: "GET", headers: {
@@ -17,7 +22,7 @@ restaurantController.getRestaurants = async (req, res, next) => {
     next()
   } catch (err) {
     return next({
-      log: `Express caught error in controller.getRestaurants: ${err}`,
+      log: `Express caught error in restaurantController.getRestaurants: ${err}`,
       message: {
         err: 'An error occurred with fetching restaurant information.',
       },

@@ -14,7 +14,7 @@ import {
   Box,
 } from '@mui/material';
 
-const ReviewsModal = ({ info }) => {
+const ReviewsModal = ({ info}) => {
   // const { reviews } = reviews;
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -26,7 +26,7 @@ const ReviewsModal = ({ info }) => {
     rating: 3,
     reviewText: 'Write a review...',
     username: info.username,
-    restaraunt_id: info.restaraunt_id,
+    restaraunt_id: info.id,
   });
 
   const handleExpandClick = () => {

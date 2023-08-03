@@ -11,12 +11,10 @@ cookieController.setCookies = (req, res, next) => {
   res.cookie('ssid', res.locals._id, {
     httpOnly: true,
   });
-  res.cookie('zipcode', res.locals.zipcode, {
-    httpOnly: true,
-  });
-  // delete res.locals._id;
-  // delete res.locals.zipcode;
-  // return next();
+  res.cookie('zipcode', res.locals.zipcode)
+  delete res.locals._id;
+  delete res.locals.zipcode;
+  return next();
 };
 
 cookieController.removeCookies = (req, res, next) => {

@@ -4,6 +4,8 @@ import { updateQuery } from '../features/querySlice';
 import { updateRest } from '../features/restaurantsSlice';
 //import wobbe from '../frontend/assets/logo.png';
 
+import { useState } from 'react'; 
+
 const RestaurantQuery = () => {
   // create an action for one drop-down
   // const query = useSelector((state) => state.query);
