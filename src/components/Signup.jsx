@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 // const bcrypt = require('bcryptjs');
-
+import { useNavigate, useLocation } from 'react-router-dom';
 // TODO remove, this demo shouldn't need to reset the theme.
 
 
@@ -44,7 +44,7 @@ export default function SignUp() {
         body: JSON.stringify(body)
       };
 
-    fetch(`/signup`, requestOptions)
+    fetch('/signup', requestOptions)
       .then(response => response.json())
       .then((data) => {
         // If successful, store session, username and go to home

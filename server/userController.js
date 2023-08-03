@@ -6,32 +6,32 @@ const bcrypt = require('bcrypt');
 
 const userController = {
   authenticateSignup: (req, res, next) => {
+    console.log(req, req.body)
+    // bcrypt.hash(req.body.pw, 10)
+    //   .then( console.log(req))
+    //   .then(hashedPassword => {
+    //     const user = {
+    //       firstName: req.body.firstName,
+    //       lastName: req.body.lastName,
+    //       email: req.body.email,
+    //       pw: hashedPassword
+    //     };
+    //     // res.locals.user = user TO USE LATER WITH REAL AJAX CALL
+    //     res.locals.accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET); //creates new JWT as a string
+    //     //creates cookie
+    //     res.cookie('userToken', res.locals.accessToken, {
+    //       httpOnly: true,
+    //       domain: 'localhost',
+    //       path: '/',
+    //       expires: new Date(Date.now() + 9000000),
+    //     });
 
-    bcrypt.hash(req.body.pw, 10)
-      .then( console.log(req))
-      .then(hashedPassword => {
-        const user = {
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          email: req.body.email,
-          pw: hashedPassword
-        };
-        // res.locals.user = user TO USE LATER WITH REAL AJAX CALL
-        res.locals.accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET); //creates new JWT as a string
-        //creates cookie
-        res.cookie('userToken', res.locals.accessToken, {
-          httpOnly: true,
-          domain: 'localhost',
-          path: '/',
-          expires: new Date(Date.now() + 9000000),
-        });
-
-        res.locals.successLoginData = {
-          isSuccessful: true,
-          email: user.email,
-        };
-        return next();
-      })
+    //     res.locals.successLoginData = {
+    //       isSuccessful: true,
+    //       email: user.email,
+    //     };
+    //     return next();
+    //   })
       .then(() => console.log('woohoo new user signed up!!')
       )
       .catch((err) => {
