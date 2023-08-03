@@ -1,9 +1,9 @@
 const express = require('express');
-const fetch = require('node-fetch');
+
 const cors = require('cors');
 
 const app = express();
-const PORT = 3000;
+const port = process.env.PORT || 3000;
 
 // import controller file
 const controller = require('./controller.js');
@@ -18,7 +18,7 @@ app.use(express.json());
 
 // GET route: 'read' queries to restaurants table
 app.get('/restaurants', controller.getRestaurants, (req, res) =>
-  res.status(200).json(res.locals.restaurants)
+  res.status(200).json()
 );
 
 app.post('/restaurants', controller.getRestaurants, (req, res) =>
@@ -45,10 +45,10 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message.err);
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on localhost:${PORT}...`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is running on localhost:${PORT}...`);
+// });
 
-module.exports = app.listen(PORT, () =>
-  console.log(`Listening on port ${PORT}`)
+module.exports = app.listen(port, () =>
+  console.log(`Listening on port ${port}`)
 );

@@ -20,7 +20,7 @@ controller.getRestaurants = async (req, res, next) => {
     }
 
     const data = await db.query(query);
-    console.log('data test', data.rows);
+    //console.log('data test', data.rows);
     res.locals.restaurants = data.rows;
     return next();
   } catch (err) {

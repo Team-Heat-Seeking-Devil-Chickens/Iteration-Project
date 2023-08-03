@@ -1,7 +1,7 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-const PG_URI = `postgresql://postgres:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/panda-whale-group`;
+const PG_URI = `test-postgresql://postgres:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/panda-whale-group`;
 
 // create new pool using connection string
 const pool = new Pool({

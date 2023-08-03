@@ -123,6 +123,7 @@ export default function SignUp() {
               </Grid>
             </Grid>
             <Button
+              className='submitbtn'
               type="submit"
               fullWidth
               variant="contained"
