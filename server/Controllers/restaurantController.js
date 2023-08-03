@@ -8,7 +8,6 @@ restaurantController.getRestaurants = async (req, res, next) => {
   try {
     const { zipcode, categories, price, radius } = req.body;
     let csvString;
-    console.log(zipcode);
     if (categories) {
       csvString = categories.join(',');
     } else {
