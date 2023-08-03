@@ -14,9 +14,9 @@ app.use(express.json());
 
 
 // GET route: 'read' queries to restaurants table
-app.get('/restaurants', controller.getRestaurants, (req, res) =>
-  res.status(200).json(res.locals.restaurants)
-);
+// app.get('/restaurants', controller.getRestaurants, (req, res) =>
+//   res.status(200).json(res.locals.restaurants)
+// ); 
 
 // //TODO: What does this do?
 // app.post('/restaurants', controller.getRestaurants, (req, res) =>

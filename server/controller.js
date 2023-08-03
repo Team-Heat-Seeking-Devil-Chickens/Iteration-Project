@@ -2,31 +2,35 @@ const db = require('./models.js');
 const format = require('pg-format');
 
 const controller = {
-  getRestaurants: async (req, res, next) => {
-    try {
-      let query = `SELECT * FROM restaurants`;
-      let firstParam = true;
-      for (const key in req.body) {
-        const request = req.body;
-        if (request[key] !== '') {
-          if (key === 'location_radius') query += `${firstParam ? ' WHERE' : ' AND'} ${key} < ${request[key]}`
-          else query += `${firstParam ? ' WHERE' : ' AND'} ${key} = '${request[key]}'`;
-          firstParam = false;
-        }
-      }
+  getReviews: (req, res, next) => {
+    const selectedRestaurantId = req.;
+    const getReviewsQuery = `SELECT * FROM reviews`; //needs to be the specific requested restaurant
+  }
+  // getRestaurants: async (req, res, next) => {
+  //   try {
+  //     let query = `SELECT * FROM restaurants`;
+  //     let firstParam = true;
+  //     for (const key in req.body) {
+  //       const request = req.body;
+  //       if (request[key] !== '') {
+  //         if (key === 'location_radius') query += `${firstParam ? ' WHERE' : ' AND'} ${key} < ${request[key]}`
+  //         else query += `${firstParam ? ' WHERE' : ' AND'} ${key} = '${request[key]}'`;
+  //         firstParam = false;
+  //       }
+  //     }
 
-      const data = await db.query(query);
-      res.locals.restaurants = data.rows;
-      return next();
-    } catch (err) {
-      return next({
-        log: `Express caught error in controller.getRestaurants: ${err}`,
-        message: {
-          err: 'An error occurred with fetching restaurant information.',
-        },
-      });
-    }
-  },
+  //     const data = await db.query(query);
+  //     res.locals.restaurants = data.rows;
+  //     return next();
+  //   } catch (err) {
+  //     return next({
+  //       log: `Express caught error in controller.getRestaurants: ${err}`,
+  //       message: {
+  //         err: 'An error occurred with fetching restaurant information.',
+  //       },
+  //     });
+  //   }
+  // },
 
   submitReview: async (req, res, next) => {
     try {
@@ -48,9 +52,7 @@ const controller = {
     }
   },
 
-  getReviews: (req, res, next) => {
 
-  }
 };
 
 module.exports = controller;
