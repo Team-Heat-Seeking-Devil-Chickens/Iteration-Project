@@ -8,8 +8,6 @@ const userController = {
   authenticateSignup: (req, res, next) => {
     bcrypt
       .hash(req.body.pw, 10)
-
-      .then( console.log(req))
       .then(hashedPassword => {
         console.log('hashedPassword:', hashedPassword);
 

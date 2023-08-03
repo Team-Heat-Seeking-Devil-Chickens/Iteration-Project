@@ -12,8 +12,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-// const bcrypt = require('bcryptjs');
 import { useNavigate, useLocation } from 'react-router-dom';
+
+// const bcrypt = require('bcryptjs');
+
 // TODO remove, this demo shouldn't need to reset the theme.
 
 
@@ -28,6 +30,7 @@ export default function SignUp() {
     const lastName = data.get('lastName')
     const email = data.get('email')
     const password = data.get('password')
+
     // const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
     // this.password = await bcrypt.hash(this.password, salt);
     // return next();
@@ -48,7 +51,6 @@ export default function SignUp() {
       .then(response => response.json())
       .then((data) => {
         // If successful, store session, username and go to home
-        console.log(data) //TODO: delete when done testing
         if (data.err) alert('Username already exists.');
         else {
           localStorage.setItem('email', data.email);
