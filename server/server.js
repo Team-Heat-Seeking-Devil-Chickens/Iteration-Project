@@ -1,35 +1,47 @@
 const express = require('express');
-
 const cors = require('cors');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = 3000;
 
 // import controller file
 const controller = require('./controller.js');
+const userController = require('./userController.js');
 
 // enable cors + parse json
 app.use(cors());
 app.use(express.json());
 
-// app.get('/', (req, res) =>
-//   res.status(200).json()
-// );
-
 // GET route: 'read' queries to restaurants table
 app.get('/restaurants', controller.getRestaurants, (req, res) =>
-  res.status(200).json()
-);
-
-app.post('/restaurants', controller.getRestaurants, (req, res) =>
   res.status(200).json(res.locals.restaurants)
 );
+
+// //TODO: What does this do?
+// app.post('/restaurants', controller.getRestaurants, (req, res) =>
+//   res.status(200).json(res.locals.restaurants)
+// );
 
 // POST route: 'create' entries to insert into reviews table
 app.post('/reviews', controller.submitReview, (req, res) =>
   res.status(200).json(res.locals.addedReview)
 );
 
+
+//-----> USER ROUTES START
+
+// POST route: 'create' new user accounts to insert into users table
+app.post('/signup', userController.authenticateSignup, (req, res) => {res.status(201).json(res.locals.accessToken)});
+
+
+// POST route: login user
+app.post('/login', userController.authenticateLogin, (req, res) =>
+  res.status(200).json({ isSuccessful: true })
+);
+//-----> USER ROUTES END
+
+
+//-----> GENERAL USE ROUTES START
 // unknown route handler
 app.use((req, res) => res.sendStatus(404));
 
@@ -45,9 +57,9 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message.err);
 });
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running on localhost:${PORT}...`);
-// });
+app.listen(PORT, () => {
+  console.log(`Server is running on localhost:${PORT}...`);
+});
 
 module.exports = app.listen(port, () =>
   console.log(`Listening on port ${port}`)
