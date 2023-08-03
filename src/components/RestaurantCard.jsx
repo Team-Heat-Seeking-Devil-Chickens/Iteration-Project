@@ -11,7 +11,7 @@ import {
 import ReviewsModal from './ReviewsModal.jsx';
 
 //deconstruct passed down info prop { info }
-const RestaurantCard = ({info, user, setUser}) => {
+const RestaurantCard = ({ info, username }) => {
   const {
     id,
     // user_id,
@@ -25,7 +25,7 @@ const RestaurantCard = ({info, user, setUser}) => {
     image_url,
   } = info;
 
-  info.username = user
+  // info.username = user;
 
   // const info = {
   //   name: 'Restaurant Name',
@@ -69,7 +69,7 @@ const RestaurantCard = ({info, user, setUser}) => {
           <strong>Price Tier:</strong> {info.price}
         </Typography>
         <Typography>
-          <strong>Location:</strong> {info.location.display_address.join(', ')} 
+          <strong>Location:</strong> {info.location.display_address.join(', ')}
         </Typography>
         {/* <Typography>
           <strong>Location Radius:</strong> {info.radius} km
@@ -79,7 +79,7 @@ const RestaurantCard = ({info, user, setUser}) => {
         </Typography> */}
       </CardContent>
       <CardActions>
-        {/* <ReviewsModal info={info} user={info.username} /> */}
+        <ReviewsModal info={info} username={username} />
       </CardActions>
     </Card>
   );

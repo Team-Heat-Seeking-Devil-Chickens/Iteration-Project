@@ -6,72 +6,79 @@ const mongoose = require('mongoose');
 // const fetch = require('node-fetch');
 const cors = require('cors');
 
-
 const app = express();
 const PORT = 3000;
 
-const restaurantController = require('./Controllers/restaurantController.js')
+const restaurantController = require('./Controllers/restaurantController.js');
 const cookieController = require('./Controllers/cookieController.js');
 const sessionController = require('./Controllers/sessionController.js');
 const userController = require('./Controllers/userController.js');
 
-const MONGO_URI = 'mongodb+srv://clhilgert:xdxblRkWtfc2ySyq@cluster0.ecdzfa9.mongodb.net/?retryWrites=true&w=majority'
+const MONGO_URI =
+  'mongodb+srv://clhilgert:xdxblRkWtfc2ySyq@cluster0.ecdzfa9.mongodb.net/?retryWrites=true&w=majority';
 
-mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  dbName: 'devil-chicken'
-})
+mongoose
+  .connect(MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: 'devil-chicken',
+  })
   .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
 // on login submit
-app.post('/login',
+app.post(
+  '/login',
   userController.verifyUser,
   sessionController.startSession,
   cookieController.setCookies,
-  (req, res) => res.status(200).json(res.locals));
+  (req, res) => res.status(200).json(res.locals)
+);
 
 // on signup submit
-app.post('/signup',
+app.post(
+  '/signup',
   userController.createUser,
   sessionController.startSession,
   cookieController.setCookies,
-  (req, res) => res.status(200).json(res.locals.user));
+  (req, res) => res.status(200).json(res.locals.user)
+);
 //  maybe just send res.locals.user
 // check if session exists if accessing /main
-app.get('/main',
-  sessionController.isLoggedIn,
-  (req, res) => res.status(200).json({ message: 'user is logged in' }));
+app.get('/main', sessionController.isLoggedIn, (req, res) =>
+  res.status(200).json({ message: 'user is logged in' })
+);
 
 // on logout click
-app.delete('/logout',
+app.delete(
+  '/logout',
   sessionController.endSession,
   cookieController.removeCookies,
-  (req, res) => res.status(200).json({ message: 'session has ended' }));
+  (req, res) => res.status(200).json({ message: 'session has ended' })
+);
 
 // restaurant get
 app.post('/restaurant', restaurantController.getRestaurants, (req, res) => {
-  res.status(200).json(res.locals.restaurants)
-})
+  console.log(res.locals.restaurants);
+  res.status(200).json(res.locals.restaurants);
+});
 
 // reviews get
-app.get('/reviews', restaurantController.getReviews, (req, res) => {
-  res.status(200).json(res.locals.result)
-})
+app.post('/getReviews', restaurantController.getReviews, (req, res) => {
+  res.status(200).json(res.locals.result);
+});
 
 // review post
 app.post('/reviews', restaurantController.submitReview, (req, res) => {
-  res.status(200).json(res.locals.result)
-})
-
+  res.status(200).json(res.locals.result);
+});
 
 // 404
-app.use((req, res) => res.status(404).send('page not found, L'))
+app.use((req, res) => res.status(404).send('page not found, L'));
 
 // global error handler
 app.use((err, req, res, next) => {
@@ -83,30 +90,12 @@ app.use((err, req, res, next) => {
   const errObj = Object.assign({}, defaultErr, err);
   console.log(errObj.log);
   return res.status(errObj.status).json(errObj.message);
-})
+});
 
 // start server
 app.listen(PORT, () => {
-  console.log(`server listening on port ${PORT}`)
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  console.log(`server listening on port ${PORT}`);
+});
 
 // const express = require('express');
 // const fetch = require('node-fetch');

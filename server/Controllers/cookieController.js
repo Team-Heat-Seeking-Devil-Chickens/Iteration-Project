@@ -8,10 +8,8 @@ cookieController.setCookies = (req, res, next) => {
         err: 'err user id undefined',
       },
     });
-  res.cookie('ssid', res.locals._id, {
-    httpOnly: true,
-  });
-  res.cookie('zipcode', res.locals.zipcode)
+  res.cookie('ssid', res.locals._id);
+  res.cookie('zipcode', res.locals.zipcode);
   delete res.locals._id;
   delete res.locals.zipcode;
   return next();
