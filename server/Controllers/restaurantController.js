@@ -2,17 +2,11 @@
 const { Review, User } = require('../Models/UserModel.js');
 
 const restaurantController = {};
-const token = 'lItDezxkVYm6ixarycydsXCzq1qxDCxluiOcwRcApL90rwoKYwcpCnyryDIlO3Gl_3YHxQiMJjOvoD4scgSFSkjC60GHygLj8EaUPxZtEdCQMRiO85WdqFN8U4rJZHYx'
+const token = 'gWCZDFLyT_xj5bCt7Zt10j-Opdl35YR5lEGQJcQ8bdLfdrRGXJ45oL6t5bOBB8_K6_p-MI6EgC_fQi3qGERHePoly8VBomj2mLHZRT5OiY1QAHPI4VRbMqdWW-3LZHYx'
 restaurantController.getRestaurants = async (req, res, next) => {
   try {
     const { zipcode, categories, price, radius } = req.body
-    let csvString;
-    if (categories) {
-      csvString = categories.join(',');
-    } else {
-      csvString = ''; 
-    }
-    let query = `https://api.yelp.com/v3/businesses/search?${zipcode ? `&location=${zipcode}` : ''}&term=food&${categories ? `&categories=${csvString}` : ''}${price ? `&price=${price}` : ''}${radius ? `&radius=${radius}` : ''}&sort_by=distance&limit=40`
+    let query = `https://api.yelp.com/v3/businesses/search?${zipcode ? `&location=${zipcode}` : ''}&term=food&${categories ? `&categories=${categories}` : ''}${price ? `&price=${price}` : ''}${radius ? `&radius=${radius}` : ''}&sort_by=distance&limit=40`
     const restaurantsList = await fetch(query, {
       method: "GET", headers: {
         Authorization: `Bearer ${token}`
@@ -32,7 +26,7 @@ restaurantController.getRestaurants = async (req, res, next) => {
 
 restaurantController.getReviews = async (req, res, next) => {
   try {
-    const { restaurant_id, username_id, } = req.body
+    const { restaurant_id } = req.body
     const reviewList = await Review.findOne({ restaurant_id: restaurant_id })
       .then((response) => response.json()
         .then((result) => {
