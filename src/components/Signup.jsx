@@ -7,8 +7,8 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-export default function Signup({ setLoggedIn }) {
-  const [username, setUsername] = useState('');
+export default function Signup({ loggedIn, setLoggedIn, username, setUsername }) {
+  
   const [password, setPassword] = useState('');
   const [zipcode, setZipCode] = useState('');
   const navigate = useNavigate();
@@ -38,6 +38,7 @@ export default function Signup({ setLoggedIn }) {
               localStorage.setItem('zipcode', data.zipcode);
               setLoggedIn(true);
               return navigate('/restaurant');
+             
             })
             .catch((err) => console.error(err));
         }
@@ -63,9 +64,10 @@ export default function Signup({ setLoggedIn }) {
             .json()
             .then((data) => {
               localStorage.setItem('cookieSSID', data._id);
-              localStorage.setItem('cookieSSID', data.zipcode);
+              localStorage.setItem('zipcode', data.zipcode);
               setLoggedIn(true);
-              return navigate('/restaurants');
+              return navigate('/restaurant');
+            
             })
             .catch((err) => console.error(err));
         }

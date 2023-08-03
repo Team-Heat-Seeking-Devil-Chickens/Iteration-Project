@@ -11,7 +11,7 @@ import Cookies from 'js-cookie';
 
 import Signup from '../components/Signup';
 // Function to fetch restaurants from the API
-const RestaurantDisplay = ({user, setUser}) => {
+const RestaurantDisplay = ({ user, setUser, username, setUsername}) => {
   // const restaurant = useSelector((state) => state.restaurants.restList);
   const dispatch = useDispatch();
   const zipcode = Cookies.get('zipcode');
@@ -27,6 +27,8 @@ const RestaurantDisplay = ({user, setUser}) => {
   const [meters, setMeters] = useState(2000);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+  console.log(zipcode)
+  console.log(username)
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -75,7 +77,8 @@ const milesToMeters = (e) => {
   });
       const data = await response.json();
       console.log("fetched");
-      setRestaurant(data.businesses);
+      setRestaurant(data.businesses); // []
+      console.log(data.businessess)
       setLoading(false);
     } catch (err) {
       console.log('Error fetching restaurant data:', err);
@@ -184,7 +187,7 @@ const handleEnterPress = (e) => {
         {restaurant.map((el, index) => (
 
       <Grid item xs={12} sm={6} md={4} key={index}>
-          <RestaurantCard info={el} user={user} setUser={setUser} />
+          <RestaurantCard info={el} user={user} setUser={setUser} username = {username} setUsername = {setUsername} />
         </Grid>))}
         </Grid>
       </Container>

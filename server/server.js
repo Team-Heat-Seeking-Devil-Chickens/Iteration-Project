@@ -56,6 +56,7 @@ app.delete('/logout',
 
 // restaurant get
 app.post('/restaurant', restaurantController.getRestaurants, (req, res) => {
+  console.log(res.locals.restaurants)
   res.status(200).json(res.locals.restaurants)
 })
 
