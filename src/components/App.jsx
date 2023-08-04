@@ -7,6 +7,7 @@ import RestaurantQuery from '../containers/RestaurantQuery.jsx';
 import Signup from './Signup.jsx';
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 {
   /* <h1>This is a header</h1>
 <h2>This is a secondary header</h2>
@@ -17,6 +18,7 @@ const App = () => {
   const [user, setUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState('');
 
   // useEffect(() => {
   //   const cookieToken = localStorage.getItem('cookieSSID');
@@ -26,7 +28,7 @@ const App = () => {
   // }, [loggedIn]);
 
   // const fetchUserData = async (cookieSSID) => {
-  //   const user = await fetch('/main', {
+  //   const user = await fetch('/restaurant', {
   //     headers: {
   //       Authorization: `Bearer ${cookieSSID}`,
   //     },
@@ -49,19 +51,37 @@ const App = () => {
     <div id='app'>
       <Router>
         <Routes>
-          <Route index element={user.username ? <RestaurantDisplay user={user} setUser={setUser}/> : <Signup setLoggedIn={setLoggedIn}/>}/>
-          {/* <Route path="/*" element={<Quiz />}/> */}
-          {/* <Route
-            path='/*'
+          <Route
+            index
             element={
-              user.username ? 
-                <RestaurantDisplay user={user} setUser={setUser} />
-               : 
-                <Signup setLoggedIn={setLoggedIn} />
-              
+              user.username ? (
+                <RestaurantDisplay
+                  user={user}
+                  setUser={setUser}
+                  username={username} // Pass the username state here
+                  setUsername={setUsername} // Pass the setUsername function here
+                />
+              ) : (
+                <Signup
+                  setLoggedIn={setLoggedIn}
+                  username={username}
+                  setUsername={setUsername} // Pass the setUsername function here
+                />
+              )
             }
-          /> */}
-          <Route path='/restaurant' element={<RestaurantDisplay user={user} setUser={setUser}/>}/>
+          />
+          {/* Other routes go here */}
+          <Route
+            path='/restaurant'
+            element={
+              <RestaurantDisplay
+                user={user}
+                setUser={setUser}
+                username={username} // Pass the username state here
+                setUsername={setUsername} // Pass the setUsername function here
+              />
+            }
+          />
         </Routes>
       </Router>
     </div>

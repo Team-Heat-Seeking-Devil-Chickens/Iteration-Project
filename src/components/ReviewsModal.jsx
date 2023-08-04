@@ -31,7 +31,7 @@ const ReviewsModal = ({ info, username }) => {
     rating: 3,
     review: 'Write a review...',
     username_id: '',
-    restaurantID: info.id,
+    restaurantID: null,
   });
   const [reviews, setReviews] = useState([]);
   const [toggleRender, setToggleRender] = useState(false);
@@ -39,14 +39,18 @@ const ReviewsModal = ({ info, username }) => {
 
   useEffect(() => {
     fetchReviews();
-  }, [toggleRender]);
+  }, [toggleRender, open, expanded]);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   const getSSIDCoookies = () => {
-    setReviewObject({ ...reviewObject, username_id: user });
+    setReviewObject({
+      ...reviewObject,
+      username_id: user,
+      restaurantID: info.id,
+    });
   };
   const fetchReviews = async () => {
     try {
@@ -87,9 +91,12 @@ const ReviewsModal = ({ info, username }) => {
   // });
 
   console.log('Review Object: ', reviewObject);
+  console.log('info props being passed in: ', info);
   return (
     <Box>
-      <Button onClick={handleOpen}>Reviews</Button>
+      <Button variant="contained" onClick={handleOpen}>
+        Reviews
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -138,10 +145,11 @@ const ReviewsModal = ({ info, username }) => {
               />
             </CardContent>
             <CardActions>
-              <Button variant="outlined" onClick={handleSubmit}>
+              <Button variant="contained" onClick={handleSubmit}>
                 Submit Review
               </Button>
               <Button
+                variant="contained"
                 expand={expanded}
                 onClick={handleExpandClick}
                 aria-expanded={expanded}

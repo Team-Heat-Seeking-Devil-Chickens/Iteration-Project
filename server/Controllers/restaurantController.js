@@ -7,24 +7,20 @@ const token =
 restaurantController.getRestaurants = async (req, res, next) => {
   try {
     const { zipcode, categories, price, radius } = req.body;
-    let csvString;
-    if (categories) {
-      csvString = categories.join(',');
-    } else {
-      csvString = '';
-    }
     let query = `https://api.yelp.com/v3/businesses/search?${
       zipcode ? `&location=${zipcode}` : ''
-    }&term=food&${categories ? `&categories=${csvString}` : ''}${
+    }&term=food&${categories ? `&categories=${categories}` : ''}${
       price ? `&price=${price}` : ''
-    }${radius ? `&radius=${radius}` : ''}&sort_by=distance&limit=40`;
+    }${radius ? `&radius=${radius}` : ''}&sort_by=best_match&limit=20`;
     const restaurantsList = await fetch(query, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
+
     res.locals.restaurants = await restaurantsList.json();
+
     next();
   } catch (err) {
     return next({
@@ -43,6 +39,8 @@ restaurantController.getReviews = async (req, res, next) => {
       restaurantID: restaurantID,
     }).then((response) => {
       if (!response) {
+        console.log('entered undefined/null response');
+        res.locals.result = { reviews: [], rating: 0 };
         return next();
       } else {
         res.locals.result = {

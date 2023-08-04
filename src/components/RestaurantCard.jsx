@@ -11,19 +11,19 @@ import {
 import ReviewsModal from './ReviewsModal.jsx';
 
 //deconstruct passed down info prop { info }
-const RestaurantCard = ({ info, username }) => {
-  const {
-    id,
-    // user_id,
-    // username,
-    name,
-    // categories,
-    rating,
-    location,
-    // radius,
-    price,
-    image_url,
-  } = info;
+const RestaurantCard = ({ info, user, setUser, username, setUsername }) => {
+  // const {
+  //   id,
+  //   // user_id,
+  //   // username,
+  //   name,
+  //   // categories,
+  //   rating,
+  //   location,
+  //   // radius,
+  //   price,
+  //   image_url,
+  // } = info;
 
   // info.username = user;
 
