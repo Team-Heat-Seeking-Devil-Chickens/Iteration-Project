@@ -11,22 +11,22 @@ import {
 import ReviewsModal from './ReviewsModal.jsx';
 
 //deconstruct passed down info prop { info }
-const RestaurantCard = ({info, user, setUser, username, setUsername }) => {
-  const {
-    id,
-    // user_id,
-    // username,
-    name,
-    // categories,
-    rating,
-    location,
-    // radius,
-    price,
-    image_url,
-  } = info;
+const RestaurantCard = ({ info, user, setUser, username, setUsername }) => {
+  // const {
+  //   id,
+  //   // user_id,
+  //   // username,
+  //   name,
+  //   // categories,
+  //   rating,
+  //   location,
+  //   // radius,
+  //   price,
+  //   image_url,
+  // } = info;
 
-  // info.username = user
-  console.log(username)
+  // info.username = user;
+
   // const info = {
   //   name: 'Restaurant Name',
   //   catagories: ['Mexican', 'Thai', 'Japanese'],
@@ -69,7 +69,7 @@ const RestaurantCard = ({info, user, setUser, username, setUsername }) => {
           <strong>Price Tier:</strong> {info.price}
         </Typography>
         <Typography>
-          <strong>Location:</strong> {info.location.display_address.join(', ')} 
+          <strong>Location:</strong> {info.location.display_address.join(', ')}
         </Typography>
         {/* <Typography>
           <strong>Location Radius:</strong> {info.radius} km
@@ -79,7 +79,7 @@ const RestaurantCard = ({info, user, setUser, username, setUsername }) => {
         </Typography> */}
       </CardContent>
       <CardActions>
-        {/* <ReviewsModal info={info} user={info.username} /> */}
+        <ReviewsModal info={info} username={username} />
       </CardActions>
     </Card>
   );

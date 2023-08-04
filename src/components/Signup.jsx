@@ -7,8 +7,12 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-export default function Signup({ loggedIn, setLoggedIn, username, setUsername }) {
-  
+export default function Signup({
+  loggedIn,
+  setLoggedIn,
+  username,
+  setUsername,
+}) {
   const [password, setPassword] = useState('');
   const [zipcode, setZipCode] = useState('');
   const navigate = useNavigate();
@@ -38,7 +42,6 @@ export default function Signup({ loggedIn, setLoggedIn, username, setUsername })
               localStorage.setItem('zipcode', data.zipcode);
               setLoggedIn(true);
               return navigate('/restaurant');
-             
             })
             .catch((err) => console.error(err));
         }
@@ -67,7 +70,6 @@ export default function Signup({ loggedIn, setLoggedIn, username, setUsername })
               localStorage.setItem('zipcode', data.zipcode);
               setLoggedIn(true);
               return navigate('/restaurant');
-            
             })
             .catch((err) => console.error(err));
         }
@@ -98,19 +100,27 @@ export default function Signup({ loggedIn, setLoggedIn, username, setUsername })
     },
   });
 
+  const inputProps = {
+    style: {
+      color: 'white',
+    },
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <div
-        className='login'
+        className="login"
         style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           marginTop: '2rem',
-        }}>
+        }}
+      >
         <h1
-          className='logTitle'
-          style={{ fontSize: '3rem', marginBottom: '2rem' }}>
+          className="logTitle"
+          style={{ fontSize: '3rem', marginBottom: '2rem' }}
+        >
           Team Chicken
         </h1>
         <Box
@@ -119,24 +129,28 @@ export default function Signup({ loggedIn, setLoggedIn, username, setUsername })
             flexDirection: 'column',
             gap: '16px',
             marginBottom: '2rem',
-          }}>
+          }}
+        >
           <TextField
-            label='Username'
-            variant='outlined'
+            label="Username"
+            variant="outlined"
             value={username}
+            InputProps={inputProps}
             onChange={(e) => setUsername(e.target.value)}
           />
           <TextField
-            label='Password'
-            type='password'
-            variant='outlined'
+            label="Password"
+            type="password"
+            variant="outlined"
             value={password}
+            InputProps={inputProps}
             onChange={(e) => setPassword(e.target.value)}
           />
           <TextField
-            label='Zip Code'
-            variant='outlined'
+            label="Zip Code"
+            variant="outlined"
             value={zipcode}
+            InputProps={inputProps}
             onChange={(e) => setZipCode(e.target.value)}
           />
         </Box>
@@ -145,27 +159,31 @@ export default function Signup({ loggedIn, setLoggedIn, username, setUsername })
             display: 'flex',
             justifyContent: 'space-around',
             width: '100%',
-          }}>
+          }}
+        >
           <Button
-            variant='contained'
-            size='large' // Set the button size to 'large'
+            variant="contained"
+            size="large" // Set the button size to 'large'
             onClick={handleSignUp}
-            style={{ flex: 1, marginRight: '1rem' }}>
+            style={{ flex: 1, marginRight: '1rem' }}
+          >
             Login
           </Button>
           <Button
-            variant='contained'
-            className='createAcct'
-            size='large' // Set the button size to 'large'
+            variant="contained"
+            className="createAcct"
+            size="large" // Set the button size to 'large'
             onClick={handleCreateAccount}
-            style={{ flex: 1, marginRight: '1rem' }}>
+            style={{ flex: 1, marginRight: '1rem' }}
+          >
             Create Account
           </Button>
           <Button
-            variant='contained'
-            size='large' // Set the button size to 'large'
+            variant="contained"
+            size="large" // Set the button size to 'large'
             onClick={handleLogout}
-            style={{ flex: 1 }}>
+            style={{ flex: 1 }}
+          >
             Logout
           </Button>
         </div>

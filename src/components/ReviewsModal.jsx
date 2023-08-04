@@ -13,45 +13,90 @@ import {
   Button,
   Box,
 } from '@mui/material';
+import Cookies from 'js-cookie';
 
-const ReviewsModal = ({ info}) => {
+const ReviewsModal = ({ info, username }) => {
   // const { reviews } = reviews;
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setOpen(true);
+    getSSIDCoookies();
+    fetchReviews();
+  };
   const handleClose = () => setOpen(false);
   // const [value, setValue] = useState(3);
   const [expanded, setExpanded] = useState(false);
   // const [reviewText, setReviewText] = useState('');
   const [reviewObject, setReviewObject] = useState({
     rating: 3,
-    reviewText: 'Write a review...',
-    username: info.username,
-    restaraunt_id: info.id,
+    review: 'Write a review...',
+    username_id: '',
+    restaurantID: null,
   });
+  const [reviews, setReviews] = useState([]);
+  const [toggleRender, setToggleRender] = useState(false);
+  const user = Cookies.get('ssid');
+
+  useEffect(() => {
+    fetchReviews();
+  }, [toggleRender, open, expanded]);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
+  const getSSIDCoookies = () => {
+    setReviewObject({
+      ...reviewObject,
+      username_id: user,
+      restaurantID: info.id,
+    });
+  };
+  const fetchReviews = async () => {
+    try {
+      console.log(info.id);
+      const response = await fetch('/getReviews', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ restaurantID: info.id }),
+      });
+      console.log(response);
+      const data = await response.json();
+      console.log('reviews data: ', data);
+      const reviewList = [];
+      data.reviews.forEach((data, index) => {
+        reviewList.push(<Review data={data} key={index} />);
+      });
+      setReviews(reviewList);
+    } catch (err) {
+      console.log('Error fetching reviews data:', err);
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch('/review', {
+    fetch('/reviews', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(reviewObject),
     }).catch((err) => console.log(err));
+
+    setToggleRender(!toggleRender);
   };
 
-  const reviewList = [];
-
-  info.reviews.forEach((data) => {
-    reviewList.push(<Review data={data} info={info} key={data.username} />);
-  });
+  // info.reviews.forEach((data) => {
+  //   reviewList.push(<Review data={data} info={info} key={data.username} />);
+  // });
 
   console.log('Review Object: ', reviewObject);
+  console.log('info props being passed in: ', info);
   return (
     <Box>
-      <Button onClick={handleOpen}>Reviews</Button>
+      <Button variant="contained" onClick={handleOpen}>
+        Reviews
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -90,20 +135,21 @@ const ReviewsModal = ({ info}) => {
                 multiline
                 rows={4}
                 // defaultValue="Write a review..."
-                value={reviewObject.reviewText}
+                value={reviewObject.review}
                 onChange={(event, value) => {
                   setReviewObject({
                     ...reviewObject,
-                    reviewText: event.target.value,
+                    review: event.target.value,
                   });
                 }}
               />
             </CardContent>
             <CardActions>
-              <Button variant="outlined" onClick={handleSubmit}>
+              <Button variant="contained" onClick={handleSubmit}>
                 Submit Review
               </Button>
               <Button
+                variant="contained"
                 expand={expanded}
                 onClick={handleExpandClick}
                 aria-expanded={expanded}
@@ -117,7 +163,7 @@ const ReviewsModal = ({ info}) => {
                 <Typography id="review-modal-title" variant="h6" component="h2">
                   Reviews:
                 </Typography>
-                {reviewList}
+                {reviews}
               </CardContent>
             </Collapse>
           </Card>
@@ -128,4 +174,3 @@ const ReviewsModal = ({ info}) => {
 };
 
 export default ReviewsModal;
-

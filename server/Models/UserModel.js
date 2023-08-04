@@ -9,12 +9,12 @@ const userSchema = new Schema({
 
 const reviewSchema = new Schema({
   restaurantID: { type: String, required: true, unique: true },
-  reviews: { type: [Object], required: true, unique: true },
+  reviews: { type: [Object] },
   total: { type: Number, default: 0 },
-  count: { type: Number, default: 0 }
-})
+  count: { type: Number, default: 0 },
+});
 
 const User = mongoose.model('user', userSchema);
-const Review = mongoose.model('review', reviewSchema)
+const Review = mongoose.model('review', reviewSchema);
 
 module.exports = { User, Review };

@@ -18,13 +18,13 @@ import TextField from '@mui/material/TextField';
 
 import Signup from '../components/Signup';
 // Function to fetch restaurants from the API
-const RestaurantDisplay = ({ user, setUser, username, setUsername}) => {
+const RestaurantDisplay = ({ user, setUser, username, setUsername }) => {
   // const restaurant = useSelector((state) => state.restaurants.restList);
   const dispatch = useDispatch();
   const zipcode = Cookies.get('zipcode');
 
   const [location, setLocation] = useState(zipcode); // State variable for location
-  const [searchLocation, setSearchLocation] = useState('')
+  const [searchLocation, setSearchLocation] = useState('');
   const [term, setTerm] = useState(''); // State variable for restaurant term
   const [restaurant, setRestaurant] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -34,50 +34,52 @@ const RestaurantDisplay = ({ user, setUser, username, setUsername}) => {
   const [mileLabel, setMileLabel] = useState('20');
 
   const milesToMeters = (e) => {
-    const miles = e.target.value
+    const miles = e.target.value;
     setMileLabel(miles);
     const convertToMeters = miles * 1609;
     setMeters(convertToMeters);
-  }
+  };
 
   const handleCuisine = (e) => {
-    const cuisine = e.target.value
-    console.log(cuisine)
+    const cuisine = e.target.value;
+    console.log(cuisine);
     setCategory(cuisine);
-  }
+  };
 
   const handlePrice = (e) => {
-    const newPrice = e.target.value
+    const newPrice = e.target.value;
     setPrice(newPrice);
-  }
+  };
 
   const getDollarSigns = (price) => {
     const numberOfDollarSigns = price.split(',').length;
     const newLabel = '$'.repeat(numberOfDollarSigns);
-    setPriceLabel(newLabel)
-    console.log(priceLabel)
+    setPriceLabel(newLabel);
+    console.log(priceLabel);
   };
 
   const fetchRestaurants = async () => {
     try {
-      const response = await fetch('/restaurant',
-        {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ zipcode: location, radius: meters, categories: category, price: price }),
-        });
+      const response = await fetch('/restaurant', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          zipcode: location,
+          radius: meters,
+          categories: category,
+          price: price,
+        }),
+      });
       const data = await response.json();
-      console.log("fetched");
-      setRestaurant(data.businesses); // []
-      console.log(data.businessess)
+      console.log('fetched');
+      setRestaurant(data.businesses);
       setLoading(false);
     } catch (err) {
       console.log('Error fetching restaurant data:', err);
     }
   };
-
 
   useEffect(() => {
     fetchRestaurants();
@@ -86,7 +88,6 @@ const RestaurantDisplay = ({ user, setUser, username, setUsername}) => {
   useEffect(() => {
     fetchRestaurants();
   }, [searchLocation, meters, price, category]);
-
 
   const theme = createTheme({
     palette: {
@@ -100,42 +101,79 @@ const RestaurantDisplay = ({ user, setUser, username, setUsername}) => {
   });
 
   if (loading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   const handleEnterPress = (e) => {
     if (e.key === 'Enter') {
       setSearchLocation(location);
     }
-  }
+  };
 
-
+  const inputProps = {
+    style: {
+      color: 'white',
+    },
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <Container>
-        <Typography variant='h4' align='center' sx={{ my: 4 }}>
+        <Typography
+          style={{ color: 'white' }}
+          variant="h4"
+          align="center"
+          sx={{ my: 4, color: '#ffffff' }}
+        >
           Discover Restaurants Near You
         </Typography>
 
-        <div className='query-container' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-
-
-          <TextField id="outlined-search" label="Location" type="search" onChange={(e) => setLocation(e.target.value)}
-            onKeyDown={handleEnterPress} />
-
+        <div
+          className="query-container"
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            border: '1px',
+            borderColor: 'white',
+          }}
+        >
+          <TextField
+            style={{
+              border: '1px',
+              borderColor: 'white',
+            }}
+            id="outlined-search"
+            label="Location"
+            type="search"
+            InputProps={inputProps}
+            onChange={(e) => setLocation(e.target.value)}
+            onKeyDown={handleEnterPress}
+          />
 
           <div>
-
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: '10px', width: '500px', padding: '20px' }}>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: '10px',
+                width: '500px',
+                padding: '20px',
+              }}
+            >
               <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Distance</InputLabel>
+                  <InputLabel id="demo-simple-select-label">
+                    Distance
+                  </InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={mileLabel}
                     label="Distance"
+                    InputProps={inputProps}
                     onChange={milesToMeters}
                   >
                     <MenuItem value={5}>5 miles</MenuItem>
@@ -153,6 +191,7 @@ const RestaurantDisplay = ({ user, setUser, username, setUsername}) => {
                     id="demo-simple-select"
                     value={category}
                     label="Cuisine"
+                    InputProps={inputProps}
                     onChange={handleCuisine}
                   >
                     <MenuItem value={'mexican'}>Mexican</MenuItem>
@@ -173,6 +212,7 @@ const RestaurantDisplay = ({ user, setUser, username, setUsername}) => {
                     id="demo-simple-select"
                     value={''}
                     label="Price"
+                    InputProps={inputProps}
                     onChange={handlePrice}
                   >
                     <MenuItem value={'1'}>$</MenuItem>
@@ -183,16 +223,21 @@ const RestaurantDisplay = ({ user, setUser, username, setUsername}) => {
                 </FormControl>
               </Box>
             </div>
-
           </div>
         </div>
 
-        <Grid container spacing={3} alignItems='stretch'>
+        <Grid container spacing={3} alignItems="stretch">
           {restaurant.map((el, index) => (
-
-      <Grid item xs={12} sm={6} md={4} key={index}>
-          <RestaurantCard info={el} user={user} setUser={setUser} username = {username} setUsername = {setUsername} />
-        </Grid>))}
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <RestaurantCard
+                info={el}
+                user={user}
+                setUser={setUser}
+                username={username}
+                setUsername={setUsername}
+              />
+            </Grid>
+          ))}
         </Grid>
       </Container>
     </ThemeProvider>
