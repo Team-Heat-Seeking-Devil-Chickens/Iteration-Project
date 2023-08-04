@@ -35,6 +35,12 @@ module.exports = {
     hot: true,
     compress: true,
     historyApiFallback: true,
+    proxy: {
+      '/': {
+        target: 'http://localhost:8080',
+        router: () => 'http://localhost:3000',
+   }
+}
   },
   // LOADERS
   module: {
@@ -67,6 +73,9 @@ module.exports = {
         type: 'assets/resource',
       },
     ],
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
   // set up plugins
   plugins: [
