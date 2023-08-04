@@ -28,7 +28,7 @@ const RestaurantDisplay = ({ user, setUser, username, setUsername }) => {
   const [term, setTerm] = useState(''); // State variable for restaurant term
   const [restaurant, setRestaurant] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [meters, setMeters] = useState(2000);
+  const [meters, setMeters] = useState(10000);
   const [price, setPrice] = useState('1,2,3,4');
   const [category, setCategory] = useState('');
   const [mileLabel, setMileLabel] = useState('20');
